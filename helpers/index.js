@@ -1,3 +1,3 @@
-export { default as HttpError } from "./HttpError.js";
-export { default as ctrlWrapper } from "./ctrlWrapper.js";
-export { default as handleMongooseError } from "./handleMongooseError.js";
+export { HttpError } from "./HttpError.js";
+export { ctrlWrapper } from "./ctrlWrapper.js";
+export { handleMongooseError } from "./handleMongooseError.js";

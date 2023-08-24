@@ -3,6 +3,6 @@ import { coctailController } from "../../controllers/coctail-controller/index.js
 
 const router = express.Router();
 
-router.get("/", coctailController.getAll);
+router.get("/main-page", coctailController.getAll);
 
 export { router };

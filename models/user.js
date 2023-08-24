@@ -3,8 +3,7 @@ import { Schema, model } from "mongoose";
 
 import { handleMongooseError } from "../helpers/index.js";
 
-const emailRegexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const enumSubscription = ["starter", "pro", "business"];
+const emailRegexp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
 const userSchema = Schema(
 	{
@@ -23,17 +22,8 @@ const userSchema = Schema(
 			unique: true,
 			match: emailRegexp,
 		},
-		subscription: {
-			type: String,
-			enum: enumSubscription,
-			default: "starter",
-		},
+		
 		token: { type: String, default: "" },
-		verify: { type: Boolean, default: false },
-		verificationCode: {
-			type: String,
-			require: [true, "Verify token is required"],
-		},
 	},
 	{ versionKey: false, timestamps: true },
 );
@@ -53,21 +43,9 @@ const loginSchemaJoi = Joi.object({
 	password: Joi.string().min(6).required(),
 });
 
-const updateSubscription = Joi.object({
-	subscription: Joi.string()
-		.valid(...enumSubscription)
-		.required(),
-});
-
-const emailSchemaJoi = Joi.object({
-	email: Joi.string().pattern(emailRegexp).required(),
-});
-
 const schemas = {
 	registerSchemaJoi,
 	loginSchemaJoi,
-	updateSubscription,
-	emailSchemaJoi,
 };
 
 export { User, schemas };
