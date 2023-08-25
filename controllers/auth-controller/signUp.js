@@ -2,10 +2,10 @@ import User from "../../models/user.js";
 import { nanoid } from "nanoid";
 import "dotenv/config";
 import bcrypt from "bcrypt";
-import { HttpError, sendEmail } from "../../helpers/index.js";
+import { HttpError } from "../../helpers/index.js"; // допиши тут sendEmail в {}
 // import jwt from "jsonwebtoken";
 
-const { BASE_URL } = process.env;
+// const { BASE_URL } = process.env;
 
 export const signUp = async (req, res) => {
 	const { name, email, password } = req.body;
@@ -22,23 +22,23 @@ export const signUp = async (req, res) => {
 		verificationToken,
 	});
 
-	const verifyEmail = {
-		to: email,
-		subject: "Drink Master: Verify email",
-		html: `<div>
-            <p>
-              Please,
-              <a href="${BASE_URL}/api/auth/verify/${verificationToken}" target="_blank">
-                CLICK
-              </a>
-              on this link to verify your email
-            </p>
-            <p style="color: orange"><strong>WARNING!!!</strong></p>
-            <p>If you have not registered with our app, <br>please ignore this email and <span style="color: red">do not click on this link!</span></p>
-          </div>`,
-	};
+	// const verifyEmail = {
+	// 	to: email,
+	// 	subject: "Drink Master: Verify email",
+	// 	html: `<div>
+	//           <p>
+	//             Please,
+	//             <a href="${BASE_URL}/api/auth/verify/${verificationToken}" target="_blank">
+	//               CLICK
+	//             </a>
+	//             on this link to verify your email
+	//           </p>
+	//           <p style="color: orange"><strong>WARNING!!!</strong></p>
+	//           <p>If you have not registered with our app, <br>please ignore this email and <span style="color: red">do not click on this link!</span></p>
+	//         </div>`,
+	// };
 
-	await sendEmail(verifyEmail);
+	// await sendEmail(verifyEmail);
 
 	res.status(201).json({
 		user: {
