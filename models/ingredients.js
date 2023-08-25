@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
 
-import { handleSaveError, handleUpdateValidate } from "./hooks"
+import { handleSaveError, handleUpdateValidate } from "../helpers";
 
 const ingredientSchema = new Schema(
     {},

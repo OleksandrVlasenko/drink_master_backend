@@ -3,6 +3,6 @@ import { glassListController } from "../../controllers/glassList-controller/inde
 
 const router = express.Router();
 
-router.get("/", glassListController.getGlassList);
+router.get("/", glassListController.getAll);
 
 export { router };
