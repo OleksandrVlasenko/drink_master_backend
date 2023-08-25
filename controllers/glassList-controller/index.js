@@ -1,9 +1,9 @@
-import { getGlassList } from "./getGlassList.js";
+import { getAll } from "./getAll.js";
 
 import { ctrlWrapper } from "../../helpers/index.js";
 
 const glassListController = {
-	getGlassList: ctrlWrapper(getGlassList),
+	getAll: ctrlWrapper(getAll),
 };
 
 export { glassListController };
