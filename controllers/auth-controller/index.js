@@ -1,16 +1,18 @@
 import { getCurrentUser } from "./getCurrentUser.js";
-import { login } from "./login.js";
+import { signIn } from "./signIn.js";
 import { logout } from "./logout.js";
-import { register } from "./register.js";
+import { signUp } from "./signUp.js";
+import { verify } from "./verify.js";
 import { updateUser } from "./updateUser.js";
 
 import { ctrlWrapper } from "../../helpers/index.js";
 
 const authController = {
 	getCurrentUser: ctrlWrapper(getCurrentUser),
-	login: ctrlWrapper(login),
+	signIn: ctrlWrapper(signIn),
 	logout: ctrlWrapper(logout),
-	register: ctrlWrapper(register),
+	signUp: ctrlWrapper(signUp),
+	verify: ctrlWrapper(verify),
 	updateUser: ctrlWrapper(updateUser),
 };
 

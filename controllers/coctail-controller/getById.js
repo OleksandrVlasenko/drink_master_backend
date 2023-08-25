@@ -1,3 +1,4 @@
+import { HttpError } from "../../helpers/index.js";
 import { Coctail } from "../../models/coctail.js";
 
 async function getById(req, res) {
