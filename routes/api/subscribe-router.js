@@ -3,6 +3,6 @@ import { subscribeController } from "../../controllers/subscribe-controller/inde
 
 const router = express.Router();
 
-router.post("/subscribe", subscribeController.subscribe);
+router.post("/", subscribeController.subscribe);
 
 export { router };

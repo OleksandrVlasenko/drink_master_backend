@@ -1,4 +1,4 @@
-import { subscribe } from "./subscribe-controller.js";
+import { subscribe } from "./subscribe.js";
 
 import { ctrlWrapper } from "../../helpers/index.js";
 

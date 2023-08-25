@@ -68,6 +68,11 @@ export default User;
 // const schemas = {
 // 	registerSchemaJoi,
 // 	loginSchemaJoi,
+// };
+
+// const schemas = {
+// 	registerSchemaJoi,
+// 	loginSchemaJoi,
 // 	updateSubscription,
 // 	emailSchemaJoi,
 // };
