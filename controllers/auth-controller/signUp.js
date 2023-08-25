@@ -1,7 +1,7 @@
 import User from "../../models/user.js";
 import { nanoid } from "nanoid";
 import "dotenv/config";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { HttpError } from "../../helpers/index.js";
 // import jwt from "jsonwebtoken";
 
