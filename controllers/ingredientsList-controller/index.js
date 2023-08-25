@@ -1,4 +1,4 @@
-import { getAll } from "./getAll";
+import { getAll } from "./getAll.js";
 
 import { ctrlWrapper } from "../../helpers/index.js";
 
