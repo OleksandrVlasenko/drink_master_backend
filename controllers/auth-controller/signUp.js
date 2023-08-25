@@ -2,6 +2,7 @@ import User from "../../models/user.js";
 import { nanoid } from "nanoid";
 import "dotenv/config";
 import bcrypt from "bcryptjs";
+import { HttpError } from "../../helpers/index.js";
 // import jwt from "jsonwebtoken";
 
 // const { JWt_SECRET, BASE_URL } = process.env;
