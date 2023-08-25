@@ -1,17 +1,17 @@
 import { getCurrentUser } from "./getCurrentUser.js";
-import { login } from "./login.js";
+import { signIn } from "./signIn.js";
 import { logout } from "./logout.js";
-import { register } from "./register.js";
+import { signUp } from "./signUp.js";
 import { updateUser } from "./updateUser.js";
 
 import { ctrlWrapper } from "../../helpers/index.js";
 
 const authController = {
-	getCurrentUser: ctrlWrapper(getCurrentUser),
-	login: ctrlWrapper(login),
-	logout: ctrlWrapper(logout),
-	register: ctrlWrapper(register),
-	updateUser: ctrlWrapper(updateUser),
+  getCurrentUser: ctrlWrapper(getCurrentUser),
+  signIn: ctrlWrapper(signIn),
+  logout: ctrlWrapper(logout),
+  signUp: ctrlWrapper(signUp),
+  updateUser: ctrlWrapper(updateUser),
 };
 
 export { authController };
