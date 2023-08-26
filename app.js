@@ -28,7 +28,7 @@ app.use(express.static("public"));
 app.use("/api/auth", AuthRouter);
 app.use("/api/recipes", CoctailRouter);
 app.use("/api/subscribe", SubscribeRouter);
-app.use("/api/category-list", CategoryListRouter);
+app.use("/api/category", CategoryListRouter);
 app.use("/api/ingredients", IngredientListRouter);
 app.use("/api/glass", GlassListRouter);
 app.use("/api/own", MyRecipesRouter);
