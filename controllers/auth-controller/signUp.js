@@ -8,7 +8,8 @@ import { HttpError } from "../../helpers/index.js"; // допиши тут sendE
 // const { BASE_URL } = process.env;
 
 export const signUp = async (req, res) => {
-	const { name, email, password } = req.body;
+	const { email, password } = req.body;
+	console.log(req.body);
 	const user = await User.findOne({ email });
 	if (user) throw HttpError(409, "Email already exists");
 
@@ -17,7 +18,6 @@ export const signUp = async (req, res) => {
 
 	const newUser = await User.create({
 		...req.body,
-		name,
 		password: hashPassword,
 		verificationToken,
 	});

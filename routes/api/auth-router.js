@@ -1,13 +1,22 @@
 import express from "express";
 import { authController } from "../../controllers/auth-controller/index.js";
-import { isEmptyBody } from "../../middlewares/index.js";
+import { validateBody } from "../../middlewares/index.js";
+import userSchemas from "../../schemas/user-schemas.js";
 
 const router = express.Router();
 
-router.post("/signup", isEmptyBody(), authController.signUp);
+router.post(
+	"/signup",
+	validateBody(userSchemas.userSingUpSchema),
+	authController.signUp
+);
 // router.get("/verify/:verificationToken", authController.verify);
 
-router.post("/signin", authController.signIn);
+router.post(
+	"/signin",
+	validateBody(userSchemas.userSingInSchema),
+	authController.signIn
+);
 
 // router.get("/currentUser", authController.getCurrentUser);
 
