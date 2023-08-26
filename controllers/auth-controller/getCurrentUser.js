@@ -1,5 +1,6 @@
 const getCurrentUser = (req, res) => {
-	// const { name, email, token } = req.user;
-	console.log({ user: { ...req.user } });
+	res.json({
+		userData: { ...req.user._doc },
+	});
 };
 export { getCurrentUser };

@@ -15,7 +15,7 @@ router.post("/signin", validateBody(userSingInSchema), authController.signIn);
 
 router.get("/current", authenticate, authController.getCurrentUser);
 
-// router.post("/logout", authController.logout);
+router.post("/signout", authenticate, authController.signOut);
 
 // router.patch("/", authController.updateUser);
 
