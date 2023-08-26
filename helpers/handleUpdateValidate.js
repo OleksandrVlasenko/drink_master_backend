@@ -1,6 +1,6 @@
-const handleUpdateValidate = (next) => {
-  this.options.runValidators = true;
-  next();
+const handleUpdateValidate = function (next) {
+	this.options.runValidators = true;
+	next();
 };
 
-export {  handleUpdateValidate };
+export { handleUpdateValidate };
