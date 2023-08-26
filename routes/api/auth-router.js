@@ -1,11 +1,7 @@
 import express from "express";
 import { authController } from "../../controllers/auth-controller/index.js";
 import { validateBody, authenticate } from "../../middlewares/index.js";
-import {
-	userSingUpSchema,
-	userSingInSchema,
-	// userEmailVerifySchema,
-} from "../../models/user.js";
+import { userSingUpSchema, userSingInSchema } from "../../models/user.js";
 
 const router = express.Router();
 
