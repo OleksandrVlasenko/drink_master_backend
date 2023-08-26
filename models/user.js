@@ -2,7 +2,7 @@
 import { Schema, model } from "mongoose";
 import { emailRegexp } from "../constants/user-constants.js";
 
-import { handleUpdateValidator, handleSaveError } from "../helpers/index.js";
+import { handleUpdateValidate, handleMongooseError } from "../helpers/index.js";
 
 const userSchema = new Schema(
 	{
@@ -37,11 +37,11 @@ const userSchema = new Schema(
 	{ versionKey: false, timestamps: true }
 );
 
-userSchema.pre("findOneAndUpdate", handleUpdateValidator);
+userSchema.pre("findOneAndUpdate", handleUpdateValidate);
 
-userSchema.post("save", handleSaveError);
+userSchema.post("save", handleMongooseError);
 
-userSchema.post("findOneAndUpdate", handleSaveError);
+userSchema.post("findOneAndUpdate", handleMongooseError);
 
 export const User = model("user", userSchema);
 export default User;
