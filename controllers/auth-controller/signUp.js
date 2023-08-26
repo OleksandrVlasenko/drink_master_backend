@@ -19,14 +19,14 @@ export const signUp = async (req, res) => {
 		password: hashPassword,
 	});
 
-	const userId = await User.findOne({ email });
+	// const userId = await User.findOne({ email });
 
 	const payload = {
-		id: userId._id,
+		id: newUser._id,
 	};
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-	await User.findByIdAndUpdate(userId._id, { token });
+	await User.findByIdAndUpdate(newUser._id, { token });
 
 	res.status(201).json({
 		token,
