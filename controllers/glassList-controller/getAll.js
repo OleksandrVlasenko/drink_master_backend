@@ -1,6 +1,8 @@
+import { Glass } from "../../models/glass.js";
+
 const getAll = async (req, res) => {
-  const data = "some glasses data";
-  res.json(data);
+	const result = await Glass.find();
+	res.json(result);
 };
 
 export { getAll };

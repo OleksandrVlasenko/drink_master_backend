@@ -3,6 +3,6 @@ import { ingredientsListController } from "../../controllers/ingredientsList-con
 
 const router = express.Router();
 
-router.get("/list", ingredientsListController.getAll);
+router.get("/", ingredientsListController.getAll);
 
 export { router };

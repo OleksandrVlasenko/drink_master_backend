@@ -1,18 +1,21 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
 
-import { handleSaveError, handleUpdateValidate } from "../helpers";
+import { handleMongooseError, handleUpdateValidate } from "../helpers/index.js";
 
 const ingredientSchema = new Schema(
-	{},
+	{
+		title: { type: String, required: true },
+		ingredientThumb: { type: String, default: "" },
+	},
 	{ versionKey: false, timestamps: true },
 );
 
 ingredientSchema.pre("findByIdAndUpdate", handleUpdateValidate);
 
-ingredientSchema.post("save", handleSaveError);
+ingredientSchema.post("save", handleMongooseError);
 
-ingredientSchema.post("findByIdAndUpdate", handleSaveError);
+ingredientSchema.post("findByIdAndUpdate", handleMongooseError);
 
 const emptySchema = Joi.object()
 	.min(1)
@@ -29,7 +32,7 @@ const ingredientSchemaJoi = Joi.object({});
 
 const Ingredient = model("ingredient", ingredientSchema);
 
-export default {
+export {
 	Ingredient,
 	emptySchema,
 	ingredientSchemaJoi,
