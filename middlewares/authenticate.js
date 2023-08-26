@@ -6,7 +6,7 @@ import { User } from "../models/user.js";
 const { SECRET_KEY } = process.env;
 
 const authenticate = async (req, res, next) => {
-	const { authorization } = req.headers;
+	const { authorization = "" } = req.headers;
 	try {
 		if (!authorization) {
 			throw HttpError(401);

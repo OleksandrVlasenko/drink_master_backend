@@ -1,22 +1,17 @@
 import express from "express";
 import { authController } from "../../controllers/auth-controller/index.js";
 import { validateBody } from "../../middlewares/index.js";
-import userSchemas from "../../schemas/user-schemas.js";
+import {
+	userSingUpSchema,
+	userSingInSchema,
+	// userEmailVerifySchema,
+} from "../../models/user.js";
 
 const router = express.Router();
 
-router.post(
-	"/signup",
-	validateBody(userSchemas.userSingUpSchema),
-	authController.signUp
-);
-// router.get("/verify/:verificationToken", authController.verify);
+router.post("/signup", validateBody(userSingUpSchema), authController.signUp);
 
-router.post(
-	"/signin",
-	validateBody(userSchemas.userSingInSchema),
-	authController.signIn
-);
+router.post("/signin", validateBody(userSingInSchema), authController.signIn);
 
 // router.get("/currentUser", authController.getCurrentUser);
 

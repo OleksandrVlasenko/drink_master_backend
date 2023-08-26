@@ -1,11 +1,10 @@
-import User from "../../models/user.js";
-import { nanoid } from "nanoid";
+import { User } from "../../models/user.js";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import { HttpError } from "../../helpers/index.js"; // допиши тут sendEmail в {}
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-// const { BASE_URL } = process.env;
+const { SECRET_KEY } = process.env;
 
 export const signUp = async (req, res) => {
 	const { email, password } = req.body;
@@ -14,33 +13,23 @@ export const signUp = async (req, res) => {
 	if (user) throw HttpError(409, "Email already exists");
 
 	const hashPassword = await bcrypt.hash(password, 10);
-	const verificationToken = nanoid();
 
 	const newUser = await User.create({
 		...req.body,
 		password: hashPassword,
-		verificationToken,
 	});
 
-	// const verifyEmail = {
-	// 	to: email,
-	// 	subject: "Drink Master: Verify email",
-	// 	html: `<div>
-	//           <p>
-	//             Please,
-	//             <a href="${BASE_URL}/api/auth/verify/${verificationToken}" target="_blank">
-	//               CLICK
-	//             </a>
-	//             on this link to verify your email
-	//           </p>
-	//           <p style="color: orange"><strong>WARNING!!!</strong></p>
-	//           <p>If you have not registered with our app, <br>please ignore this email and <span style="color: red">do not click on this link!</span></p>
-	//         </div>`,
-	// };
+	const userId = await User.findOne({ email });
 
-	// await sendEmail(verifyEmail);
+	const payload = {
+		id: userId._id,
+	};
+
+	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+	await User.findByIdAndUpdate(userId._id, { token });
 
 	res.status(201).json({
+		token,
 		user: {
 			name: newUser.name,
 			email: newUser.email,
