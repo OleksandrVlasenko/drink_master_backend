@@ -1,4 +1,4 @@
-// import Joi from "joi";
+import Joi from "joi";
 import { Schema, model } from "mongoose";
 import { emailRegexp } from "../constants/user-constants.js";
 
@@ -25,14 +25,6 @@ const userSchema = new Schema(
 			type: String,
 			default: "",
 		},
-		verify: {
-			type: Boolean,
-			default: false,
-		},
-		verificationToken: {
-			type: String,
-			// required: [true, "Verify token is required"],
-		},
 	},
 	{ versionKey: false, timestamps: true }
 );
@@ -43,44 +35,23 @@ userSchema.post("save", handleMongooseError);
 
 userSchema.post("findOneAndUpdate", handleMongooseError);
 
-export const User = model("user", userSchema);
-export default User;
+const User = model("user", userSchema);
 
-// userSchema.post("save", handleMongooseError);
+const userSingUpSchema = Joi.object({
+	name: Joi.string().required(),
+	email: Joi.string().pattern(emailRegexp).required(),
+	password: Joi.string().min(6).required(),
+});
 
-// const User = model("user", userSchema);
+const userSingInSchema = Joi.object({
+	email: Joi.string().pattern(emailRegexp).required(),
+	password: Joi.string().min(6).required(),
+});
 
-// const registerSchemaJoi = Joi.object({
-// 	name: Joi.string().required(),
-// 	email: Joi.string().pattern(emailRegexp).required(),
-// 	password: Joi.string().min(6).required(),
-// });
+const userEmailVerifySchema = Joi.object({
+	email: Joi.string().pattern(emailRegexp).required(),
+}).messages({
+	"any.required": "missing required field email",
+});
 
-// const loginSchemaJoi = Joi.object({
-// 	email: Joi.string().pattern(emailRegexp).required(),
-// 	password: Joi.string().min(6).required(),
-// });
-
-// const updateSubscription = Joi.object({
-// 	subscription: Joi.string()
-// 		.valid(...enumSubscription)
-// 		.required(),
-// });
-
-// const emailSchemaJoi = Joi.object({
-// 	email: Joi.string().pattern(emailRegexp).required(),
-// });
-
-// const schemas = {
-// 	registerSchemaJoi,
-// 	loginSchemaJoi,
-// };
-
-// const schemas = {
-// 	registerSchemaJoi,
-// 	loginSchemaJoi,
-// 	updateSubscription,
-// 	emailSchemaJoi,
-// };
-
-// export { User, schemas };
+export { User, userSingUpSchema, userSingInSchema, userEmailVerifySchema };
