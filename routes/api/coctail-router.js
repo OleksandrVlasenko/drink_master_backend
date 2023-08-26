@@ -4,7 +4,7 @@ import { coctailController } from "../../controllers/coctail-controller/index.js
 
 const router = express.Router();
 
-router.get("/main-page", coctailController.getAll);
+router.get("/", coctailController.getAll);
 
 router.get("/:id", isValidId, coctailController.getById);
 
