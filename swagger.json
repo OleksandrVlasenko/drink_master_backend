@@ -169,6 +169,7 @@
 			"get": {
 				"tags": ["Recipes"],
 				"summary": "return a list of recipes",
+				"security": [{"Bearer": []}],
 				"parameters": [
 					{
 						"in": "query",
@@ -218,6 +219,10 @@
 							}
 						}
 					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
 					"404": {
 						"description": "Not found",
 						"content": {}
@@ -233,6 +238,7 @@
 			"get": {
 				"tags": ["Recipes"],
 				"summary": "return a recipe by id",
+				"security": [{ "Bearer": [] }],
 				"parameters": [
 					{
 						"in": "path",
@@ -256,6 +262,10 @@
 					},
 					"400": {
 						"description": "'Is not valid ID' or 'Coctail not found'",
+						"content": {}
+					},
+					"401": {
+						"description": "Unauthorized",
 						"content": {}
 					},
 					"404": {
@@ -285,6 +295,10 @@
 							}
 						}
 					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
 					"404": {
 						"description": "Not found",
 						"content": {}
@@ -312,6 +326,10 @@
 							}
 						}
 					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
 					"404": {
 						"description": "Not found",
 						"content": {}
@@ -338,6 +356,10 @@
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
 					},
 					"404": {
 						"description": "Not found",
@@ -478,6 +500,7 @@
 				"type": "array",
 				"items": {
 					"type": "object",
+					"required": ["drink", "category", "glass", "ingredients"],
 					"properties": {
 						"_id": {
 							"type": "string",
@@ -518,6 +541,7 @@
 							"type": "array",
 							"items": {
 								"type": "object",
+								"required": ["title", "measure"],
 								"properties": {
 									"_id": {
 										"type": "string",
