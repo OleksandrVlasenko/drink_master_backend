@@ -1,7 +1,11 @@
+import { Coctail } from "../../models/coctail.js";
+import { responseItems } from "../../constants/controllers-constants.js";
+
 async function getAll(req, res) {
-	console.log("aaa");
 	const { _id: userId } = req.user;
-	console.log("changeFavorite  userId:", userId);
-	res.json({ message: "ok", userId });
+
+	const result = await Coctail.find({ users: userId }, responseItems);
+
+	res.json(result);
 }
 export { getAll };

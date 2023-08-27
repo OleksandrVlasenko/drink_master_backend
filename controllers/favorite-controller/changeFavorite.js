@@ -29,7 +29,7 @@ async function changeFavorite(req, res) {
 		);
 	}
 
-	res.status(201).json({ isfavorite: !isFavorite });
+	res.status(201).json({ isFavorite: !isFavorite });
 }
 
 export { changeFavorite };
