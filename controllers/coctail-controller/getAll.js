@@ -18,10 +18,15 @@ async function getAll(req, res) {
 		filter = { ...filter, "ingredients.title": ingredient };
 	}
 
-	const result = await Coctail.find(filter, "", {
-		skip,
-		limit,
-	});
+	const result = await Coctail.find(
+		filter,
+		"drink description category glass instructions drinkThumb ingredients",
+		{
+			skip,
+			limit,
+		},
+	);
+	console.log("getAll  result:", result)
 
 	res.json(result);
 }
