@@ -142,6 +142,7 @@
 			"get": {
 				"tags": ["Auth"],
 				"summary": "User current",
+				"security": [{ "Bearer": [] }],
 				"parameters": [],
 				"responses": {
 					"201": {
@@ -150,6 +151,34 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/CurrentResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/auth/signout": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "User logout",
+				"security": [{ "Bearer": [] }],
+				"parameters": [],
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LogoutResponse"
 								}
 							}
 						}
@@ -411,6 +440,10 @@
 								"type": "string",
 								"description": "User's name"
 							},
+							"avatarURL": {
+								"type": "string",
+								"description": "User's avatar URL"
+							},
 							"email": {
 								"type": "string",
 								"description": "User's email",
@@ -419,7 +452,8 @@
 						},
 						"example": {
 							"name": "Alex",
-							"email": "user@example.com"
+							"email": "user@example.com",
+							"avatarURL": "https://example.com/avatar1.jpg"
 						}
 					}
 				}
@@ -455,6 +489,10 @@
 								"type": "string",
 								"description": "User's name"
 							},
+							"avatarURL": {
+								"type": "string",
+								"description": "User's avatar URL"
+							},
 							"email": {
 								"type": "string",
 								"description": "User's email",
@@ -463,7 +501,8 @@
 						},
 						"example": {
 							"name": "Alex",
-							"email": "user@example.com"
+							"email": "user@example.com",
+							"avatarURL": "https://example.com/avatar1.jpg"
 						}
 					}
 				}
@@ -494,6 +533,18 @@
 							"avatarURL": "https://example.com/avatar1.jpg"
 						}
 					}
+				}
+			},
+			"LogoutResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"description": "Signout succes"
+					}
+				},
+				"example": {
+					"message": "Signout succes"
 				}
 			},
 			"Recipes": {
