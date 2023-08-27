@@ -5,16 +5,24 @@ import { handleMongooseError } from "../helpers/index.js";
 const coctailSchema = Schema(
 	{
 		drink: { type: String, required: [true, "Set name of Coctail"] },
-		category: { type: Schema.Types.ObjectId, ref: "category", required: true },
-		glass: { type: Schema.Types.ObjectId, ref: "glass", required: true },
-		instructions: { type: String, required: true },
+		description: { type: String, default: "" },
+		category: { type: String, required: true },
+		glass: { type: String, required: true },
+		instructions: { type: String, default: "" },
 		drinkThumb: { type: String, required: false, default: "" },
 		ingredients: [
 			{
-				...{ type: Schema.Types.ObjectId, ref: "ingredient", required: true },
+				title: { type: String, required: true },
+				ingredientThumb: { type: String, default: "" },
 				measure: { type: String, required: true },
 			},
 		],
+		users: { type: Array, default: [] },
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "user",
+			required: true,
+		},
 	},
 	{ versionKey: false },
 );
