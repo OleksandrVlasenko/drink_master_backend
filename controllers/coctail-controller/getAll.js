@@ -1,4 +1,5 @@
 import { Coctail } from "../../models/coctail.js";
+import { responseItems } from "../../constants/controllers-constants.js";
 
 async function getAll(req, res) {
 	const { page = 1, limit = 10, search, category, ingredient } = req.query;
@@ -18,14 +19,10 @@ async function getAll(req, res) {
 		filter = { ...filter, "ingredients.title": ingredient };
 	}
 
-	const result = await Coctail.find(
-		filter,
-		"drink description category glass instructions drinkThumb ingredients",
-		{
-			skip,
-			limit,
-		},
-	);
+	const result = await Coctail.find(filter, responseItems, {
+		skip,
+		limit,
+	});
 	console.log("getAll  result:", result)
 
 	res.json(result);

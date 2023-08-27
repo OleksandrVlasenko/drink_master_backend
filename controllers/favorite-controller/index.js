@@ -1,13 +1,11 @@
-import { addById } from "./addById.js";
+import { changeFavorite } from "./changeFavorite.js";
 import { getAll } from "./getAll.js";
-import { removeById } from "./removeById.js";
 
 import { ctrlWrapper } from "../../helpers/index.js";
 
 const favoriteController = {
-	addById: ctrlWrapper(addById),
+	changeFavorite: ctrlWrapper(changeFavorite),
 	getAll: ctrlWrapper(getAll),
-	removeById: ctrlWrapper(removeById),
 };
 
 export { favoriteController };
