@@ -4,6 +4,6 @@ import { authenticate } from "../../middlewares/index.js";
 
 const router = express.Router();
 
-router.get("/",authenticate, glassListController.getAll);
+router.get("/", glassListController.getAll);
 
 export { router };
