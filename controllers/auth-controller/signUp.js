@@ -8,7 +8,6 @@ const { SECRET_KEY } = process.env;
 
 export const signUp = async (req, res) => {
 	const { email, password } = req.body;
-	console.log(req.body);
 	const user = await User.findOne({ email });
 	if (user) throw HttpError(409, "Email already exists");
 

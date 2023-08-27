@@ -54,12 +54,11 @@
 		}
 	],
 	"paths": {
-		"/auth/register": {
+		"/auth/signup": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "User registration",
 				"parameters": [],
-				"security": [{ "Bearer": [] }],
 				"requestBody": {
 					"description": "Registration's object",
 					"required": true,
@@ -87,7 +86,80 @@
 						"content": {}
 					},
 					"409": {
-						"description": "Provided email already exists",
+						"description": "Email already exists",
+						"content": {}
+					},
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/auth/signin": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "User login",
+				"parameters": [],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request (invalid request body)",
+						"content": {}
+					},
+					"404": {
+						"description": "User not found",
+						"content": {}
+					},
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/auth/current": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "User current",
+				"parameters": [],
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CurrentResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"500": {
+						"description": "Server error",
 						"content": {}
 					}
 				}
@@ -283,6 +355,55 @@
 		"schemas": {
 			"RegistrationRequest": {
 				"type": "object",
+				"required": ["email", "password", "name"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "User's name",
+						"example": "Alex"
+					},
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					},
+					"password": {
+						"type": "string",
+						"description": "User's password",
+						"example": "qwerty123"
+					}
+				}
+			},
+			"RegistrationResponse": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"type": "string",
+						"description": "Authentication token",
+						"example": "wre35R4y3234.jdrit45fk4OrJ45.235wetKFF3460"
+					},
+					"user": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "User's name"
+							},
+							"email": {
+								"type": "string",
+								"description": "User's email",
+								"format": "email"
+							}
+						},
+						"example": {
+							"name": "Alex",
+							"email": "user@example.com"
+						}
+					}
+				}
+			},
+			"LoginRequest": {
+				"type": "object",
 				"required": ["email", "password"],
 				"properties": {
 					"email": {
@@ -297,27 +418,61 @@
 					}
 				}
 			},
-			"RegistrationResponse": {
-				"type": "array",
-				"items": {
-					"type": "object",
-					"properties": {
-						"email": {
-							"type": "string",
-							"description": "User's email",
-							"format": "email"
+			"LoginResponse": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"type": "string",
+						"description": "Authentication token",
+						"example": "wre35R4y3234.jdrit45fk4OrJ45.235wetKFF3460"
+					},
+					"user": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "User's name"
+							},
+							"email": {
+								"type": "string",
+								"description": "User's email",
+								"format": "email"
+							}
 						},
-						"userId": {
-							"type": "number",
-							"description": "User's id",
-							"example": "32143232436545474"
+						"example": {
+							"name": "Alex",
+							"email": "user@example.com"
 						}
 					}
-				},
-				"example": [
-					{ "email": "1@gmail.com", "userId": "1" },
-					{ "email": "2@gmail.com", "userId": "2" }
-				]
+				}
+			},
+			"CurrentResponse": {
+				"type": "object",
+				"properties": {
+					"user": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "User's name"
+							},
+							"avatarURL": {
+								"type": "string",
+								"description": "User's avatar URL"
+							},
+							"email": {
+								"type": "string",
+								"description": "User's email",
+								"format": "email"
+							}
+						},
+						"example": {
+							"name": "Alex",
+							"email": "user@example.com",
+							"avatarURL": "https://example.com/avatar1.jpg"
+						}
+					}
+				}
 			},
 			"Recipes": {
 				"type": "array",
