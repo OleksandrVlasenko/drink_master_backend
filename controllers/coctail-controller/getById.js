@@ -3,7 +3,6 @@ import { Coctail } from "../../models/coctail.js";
 
 async function getById(req, res) {
 	const { _id: userId } = req.user;
-	console.log("getById  userId:", userId);
 	const { id: coctailId } = req.params;
 	const {
 		_id,

@@ -23,7 +23,6 @@ async function getAll(req, res) {
 		skip,
 		limit,
 	});
-	console.log("getAll  result:", result)
 
 	res.json(result);
 }
