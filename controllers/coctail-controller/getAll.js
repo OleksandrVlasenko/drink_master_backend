@@ -1,19 +1,29 @@
 import { Coctail } from "../../models/coctail.js";
 
 async function getAll(req, res) {
-	const { page = 1, limit = 10 } = req.query;
+	const { page = 1, limit = 10, search, category, ingredient } = req.query;
 	const skip = (page - 1) * limit;
 
-	const result = await Coctail.find({}, "", {
+	let filter = {};
+
+	if (search) {
+		filter = { ...filter, drink: { $regex: search, $options: "i" } };
+	}
+
+	if (category) {
+		filter = { ...filter, category };
+	}
+
+	if (ingredient) {
+		filter = { ...filter, "ingredients.title": ingredient };
+	}
+
+	const result = await Coctail.find(filter, "", {
 		skip,
 		limit,
 	});
-	
+
 	res.json(result);
 }
-
-// async function aaa() {
-// 	const 
-// }
 
 export { getAll };
