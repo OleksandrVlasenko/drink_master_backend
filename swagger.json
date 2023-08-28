@@ -138,10 +138,38 @@
 				}
 			}
 		},
+		"/auth/signout": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "User logout",
+				"security": [{ "Bearer": [] }],
+				"parameters": [],
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LogoutResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			}
+		},
 		"/auth/current": {
 			"get": {
 				"tags": ["Auth"],
-				"summary": "User current",
+				"summary": "Return current user's data",
 				"security": [{ "Bearer": [] }],
 				"parameters": [],
 				"responses": {
@@ -166,22 +194,26 @@
 				}
 			}
 		},
-		"/auth/signout": {
-			"post": {
+		"/auth/avatars": {
+			"patch": {
 				"tags": ["Auth"],
-				"summary": "User logout",
+				"summary": "Return uploaded avatarURL",
 				"security": [{ "Bearer": [] }],
 				"parameters": [],
 				"responses": {
 					"201": {
 						"description": "Successful operation",
 						"content": {
-							"application/json": {
+							"multipart/form-data": {
 								"schema": {
-									"$ref": "#/components/schemas/LogoutResponse"
+									"$ref": "#/components/schemas/AvatarsResponse"
 								}
 							}
 						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {}
 					},
 					"401": {
 						"description": "Unauthorized",
@@ -637,6 +669,23 @@
 				},
 				"example": {
 					"message": "Signout succes"
+				}
+			},
+			"AvatarsResponse": {
+				"type": "object",
+				"properties": {
+					"user": {
+						"type": "object",
+						"properties": {
+							"avatarURL": {
+								"type": "string",
+								"description": "User's update avatar URL"
+							}
+						},
+						"example": {
+							"avatarURL": "https://example.com/update-avatar1.jpg"
+						}
+					}
 				}
 			},
 			"Recipes": {
