@@ -3,6 +3,7 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 import { HttpError } from "../../helpers/index.js"; // допиши тут sendEmail в {}
 import jwt from "jsonwebtoken";
+import gravatar from "gravatar";
 
 const { SECRET_KEY } = process.env;
 
@@ -12,13 +13,13 @@ export const signUp = async (req, res) => {
 	if (user) throw HttpError(409, "Email already exists");
 
 	const hashPassword = await bcrypt.hash(password, 10);
+	const avatarURL = gravatar.url(email);
 
 	const newUser = await User.create({
 		...req.body,
+		avatarURL,
 		password: hashPassword,
 	});
-
-	// const userId = await User.findOne({ email });
 
 	const payload = {
 		id: newUser._id,
@@ -32,6 +33,7 @@ export const signUp = async (req, res) => {
 		user: {
 			name: newUser.name,
 			email: newUser.email,
+			avatarURL,
 		},
 	});
 };
