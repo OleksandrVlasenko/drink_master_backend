@@ -10,6 +10,7 @@ const { SECRET_KEY } = process.env;
 export const signUp = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
+	console.log(user);
 	if (user) throw HttpError(409, "Email already exists");
 
 	const hashPassword = await bcrypt.hash(password, 10);

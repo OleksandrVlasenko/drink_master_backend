@@ -14,10 +14,10 @@ router.get("/current", authenticate, authController.getCurrentUser);
 router.post("/signout", authenticate, authController.signOut);
 
 router.patch(
-	"/avatars",
+	"/update",
 	authenticate,
 	upload.single("avatar"),
-	authController.updateUserAvatar
+	authController.updateUserData
 );
 
 export { router };
