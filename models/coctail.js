@@ -18,6 +18,7 @@ const coctailSchema = Schema(
 			},
 		],
 		users: { type: Array, default: [] },
+		userArrayLenght: {type: Number, default: null},
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: "user",

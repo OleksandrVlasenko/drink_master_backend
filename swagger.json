@@ -308,6 +308,37 @@
 				}
 			}
 		},
+		"/popular-recipes": {
+			"get": {
+				"tags": ["Popular recipes"],
+				"summary": "return a 5 items of popular recipes",
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Recipes"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {}
+					},
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			}
+		},
 		"/favorite": {
 			"get": {
 				"tags": ["Favorite"],

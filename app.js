@@ -33,7 +33,7 @@ app.use("/api/ingredients", IngredientListRouter);
 app.use("/api/glass", GlassListRouter);
 app.use("/api/own", MyRecipesRouter);
 app.use("/api/favorite", favoriteRouter);
-app.use("/api/popular-recipe", PopularRecipesRouter);
+app.use("/api/popular-recipes", PopularRecipesRouter);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
