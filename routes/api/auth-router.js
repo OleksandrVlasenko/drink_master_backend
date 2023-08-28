@@ -13,6 +13,11 @@ router.get("/current", authenticate, authController.getCurrentUser);
 
 router.post("/signout", authenticate, authController.signOut);
 
-router.patch("/avatars", authenticate, upload.single("avatar"));
+router.patch(
+	"/avatars",
+	authenticate,
+	upload.single("avatar"),
+	authController.updateUserAvatar
+);
 
 export { router };
