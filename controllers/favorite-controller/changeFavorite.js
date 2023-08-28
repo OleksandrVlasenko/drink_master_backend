@@ -18,13 +18,17 @@ async function changeFavorite(req, res) {
 			coctailId,
 			{
 				$pull: { users: userId },
+				$inc: { userArrayLenght: -1 },
 			},
 			{ new: true },
 		);
 	} else {
 		await Coctail.findByIdAndUpdate(
 			coctailId,
-			{ $push: { users: userId } },
+			{
+				$push: { users: userId },
+				$inc: { userArrayLenght: 1 },
+			},
 			{ new: true },
 		);
 	}
