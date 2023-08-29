@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get("/", coctailController.getAll);
 
+router.get("/main-page", coctailController.getMainPage)
+
 router.get("/:id",authenticate, isValidId, coctailController.getById);
 
 export { router };
