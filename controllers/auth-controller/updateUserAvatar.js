@@ -1,29 +1,42 @@
-import { HttpError, cloudinary } from "../../helpers/index.js";
+import { cloudinary } from "../../helpers/index.js";
 import { User } from "../../models/user.js";
 import fs from "fs/promises";
 
-const updateUserAvatar = async (req, res) => {
-	if (!req.file) throw HttpError(400, "Please, add your avatar file");
-	const { _id } = req.user;
-	const { path: pathToAvatar } = req.file;
-	const { url: updateAvatarURL } = await cloudinary.uploader.upload(
-		pathToAvatar,
-		{
-			folder: "avatars",
-		}
-	);
+const updateUserData = async (req, res) => {
+	const { _id, name: oldUserName, avatarURL: oldAvatarURL } = req.user;
+	const { name } = req.body;
+	console.log(_id);
+	console.log(name);
+	console.log(`Це буль: ${Boolean(name)}`);
 
-	const { avatarURL } = await User.findByIdAndUpdate(_id, {
+	const updateName = name ? name : oldUserName;
+	let updateAvatarURL = oldAvatarURL;
+
+	if (req.file) {
+		const { path: pathToAvatar } = req.file;
+		const { url: updateAvatar } = await cloudinary.uploader.upload(
+			pathToAvatar,
+			{
+				folder: "avatars",
+			}
+		);
+		fs.unlink(pathToAvatar);
+		updateAvatarURL = updateAvatar;
+	}
+
+	await User.findByIdAndUpdate(_id, {
 		avatarURL: updateAvatarURL,
+		name: updateName,
 	});
 
-	fs.unlink(pathToAvatar);
+	const updateUser = await User.findById(_id);
 
 	res.status(200).json({
 		user: {
-			avatarURL,
+			name: updateUser.name,
+			avatarURL: updateUser.avatarURL,
 		},
 	});
 };
 
-export { updateUserAvatar };
+export { updateUserData };

@@ -8,7 +8,7 @@ const userSchema = new Schema(
 	{
 		name: {
 			type: String,
-			required: [true, "Name is required"],
+			// required: [true, "Name is required"],
 		},
 		email: {
 			type: String,
@@ -53,10 +53,4 @@ const userSingInSchema = Joi.object({
 	password: Joi.string().min(6).required(),
 });
 
-const userEmailVerifySchema = Joi.object({
-	email: Joi.string().pattern(emailRegexp).required(),
-}).messages({
-	"any.required": "missing required field email",
-});
-
-export { User, userSingUpSchema, userSingInSchema, userEmailVerifySchema };
+export { User, userSingUpSchema, userSingInSchema };

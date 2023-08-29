@@ -194,19 +194,30 @@
 				}
 			}
 		},
-		"/auth/avatars": {
+		"/auth/update": {
 			"patch": {
 				"tags": ["Auth"],
-				"summary": "Return uploaded avatarURL",
+				"summary": "Return uploaded avatarURL/name",
 				"security": [{ "Bearer": [] }],
 				"parameters": [],
+				"requestBody": {
+					"description": "Update username",
+					"required": false,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateRequestMultipart"
+							}
+						}
+					}
+				},
 				"responses": {
 					"201": {
 						"description": "Successful operation",
 						"content": {
-							"multipart/form-data": {
+							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/AvatarsResponse"
+									"$ref": "#/components/schemas/UpdateResponse"
 								}
 							}
 						}
@@ -733,18 +744,39 @@
 					"message": "Signout succes"
 				}
 			},
-			"AvatarsResponse": {
+			"UpdateRequestMultipart": {
+				"type": "object",
+				"properties": {
+					"avatar": {
+						"type": "string",
+						"format": "binary"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"example": {
+					"avatar": "<binary_data>",
+					"name": "New Username"
+				}
+			},
+			"UpdateResponse": {
 				"type": "object",
 				"properties": {
 					"user": {
 						"type": "object",
 						"properties": {
+							"name": {
+								"type": "string",
+								"description": "Username updated"
+							},
 							"avatarURL": {
 								"type": "string",
-								"description": "User's update avatar URL"
+								"description": "User avatar URL updated"
 							}
 						},
 						"example": {
+							"name": "username or upload-username",
 							"avatarURL": "https://example.com/update-avatar1.jpg"
 						}
 					}
