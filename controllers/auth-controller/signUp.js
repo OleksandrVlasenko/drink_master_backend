@@ -1,7 +1,7 @@
 import { User } from "../../models/user.js";
 import "dotenv/config";
 import bcrypt from "bcrypt";
-import { HttpError } from "../../helpers/index.js"; // допиши тут sendEmail в {}
+import { HttpError } from "../../helpers/index.js";
 import jwt from "jsonwebtoken";
 import gravatar from "gravatar";
 
@@ -10,7 +10,6 @@ const { SECRET_KEY } = process.env;
 export const signUp = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
-	console.log(user);
 	if (user) throw HttpError(409, "Email already exists");
 
 	const hashPassword = await bcrypt.hash(password, 10);

@@ -6,7 +6,7 @@ const updateUserData = async (req, res) => {
 	const { _id, name: oldUserName, avatarURL: oldAvatarURL } = req.user;
 	const { name } = req.body;
 
-	const updateName = name ? name : oldUserName;
+	const updateName = name || oldUserName;
 	let updateAvatarURL = oldAvatarURL;
 
 	if (req.file) {
