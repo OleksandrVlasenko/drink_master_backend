@@ -73,11 +73,4 @@ async function getAll(req, res, next) {
 	}
 }
 
-// 		.find({ users: userId }, responseItems, {
-// 		skip,
-// 		limit,
-// 	});
-
-// 	res.json(result);
-// }
 export { getAll };
