@@ -4,9 +4,9 @@ import { coctailController } from "../../controllers/coctail-controller/index.js
 
 const router = express.Router();
 
-router.get("/", coctailController.getAll);
+router.get("/",authenticate, coctailController.getAll);
 
-router.get("/main-page", coctailController.getMainPage)
+router.get("/main-page",authenticate, coctailController.getMainPage)
 
 router.get("/:id",authenticate, isValidId, coctailController.getById);
 
