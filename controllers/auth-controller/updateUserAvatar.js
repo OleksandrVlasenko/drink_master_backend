@@ -5,9 +5,6 @@ import fs from "fs/promises";
 const updateUserData = async (req, res) => {
 	const { _id, name: oldUserName, avatarURL: oldAvatarURL } = req.user;
 	const { name } = req.body;
-	console.log(_id);
-	console.log(name);
-	console.log(`Це буль: ${Boolean(name)}`);
 
 	const updateName = name ? name : oldUserName;
 	let updateAvatarURL = oldAvatarURL;
