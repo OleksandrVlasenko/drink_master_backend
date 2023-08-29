@@ -11,3 +11,4 @@ const getAll = async (req, res) => {
 };
 
 export { getAll };
+
