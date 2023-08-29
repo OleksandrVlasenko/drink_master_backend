@@ -10,7 +10,7 @@ async function getMainPage(req, res) {
 		},
 		{
 			$addFields: {
-				resipes: {
+				recipes: {
 					$map: {
 						input: {
 							$range: [0, 3],
@@ -29,10 +29,11 @@ async function getMainPage(req, res) {
 			$project: {
 				_id: 0,
 				category: "$_id",
-				resipes: {
+				recipes: {
 					$map: {
-						input: "$resipes",
+						input: "$recipes",
 						in: {
+							_id: "$$this._id",
 							drink: "$$this.drink",
 							description: "$$this.description",
 							category: "$$this.category",
@@ -47,8 +48,8 @@ async function getMainPage(req, res) {
 		},
 	]);
 
-	const recipes = result.reduce((acc, { resipes, category }) => {
-		acc[category] = resipes;
+	const recipes = result.reduce((acc, { recipes, category }) => {
+		acc[category] = recipes;
 		return acc;
 	}, {});
 

@@ -4,6 +4,15 @@ import { Coctail } from "../../models/coctail.js";
 async function getById(req, res) {
 	const { _id: userId } = req.user;
 	const { id: coctailId } = req.params;
+	const result = await Coctail.findById(
+		coctailId,
+		"drink description category glass instructions drinkThumb ingredients",
+	);
+
+	if (!result) {
+		throw HttpError(400, `Coctail not found`);
+	}
+
 	const {
 		_id,
 		drink,
@@ -13,14 +22,14 @@ async function getById(req, res) {
 		instructions,
 		drinkThumb,
 		ingredients,
-	} = await Coctail.findById(coctailId);
+		users,
+	} = result;
 
-	if (!_id) {
-		throw HttpError(400, `Coctail not found`);
+	let isFavorite = false;
+
+	if (users) {
+		isFavorite = users.includes(userId);
 	}
-
-	const { users } = await Coctail.findById(coctailId, "users");
-	const isFavorite = users.includes(userId);
 
 	res.json({
 		_id,
