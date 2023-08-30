@@ -387,7 +387,22 @@
 				"tags": ["My Recipes"],
 				"summary": "return a list of user own recipes",
 				"security": [{ "Bearer": [] }],
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "query",
+						"required": false,
+						"name": "page",
+						"type": "number",
+						"description": "Enter the number of page. Default: 1"
+					},
+					{
+						"in": "query",
+						"required": false,
+						"name": "limit",
+						"type": "number",
+						"description": "Enter how many recipes return in current page. Default: 10"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "Successful operation",
