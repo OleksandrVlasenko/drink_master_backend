@@ -11,8 +11,8 @@ const add = async (req, res) => {
 		throw HttpError(409, `${drink} already exists`);
 	}
 
-	const result = await Coctail.create({ ...req.body, owner });
-	res.status(201).json({ message: "Recipe added successfully", result });
+	const recipes = await Coctail.create({ ...req.body, owner });
+	res.status(201).json({ message: "Recipe added successfully", recipes });
 };
 
 export { add };
