@@ -1,5 +1,5 @@
-import { Coctail } from "../../models/coctail.js";
 import { HttpError } from "../../helpers/index.js";
+import { getRecipesByFilter } from "../../utils/index.js";
 
 async function getAll(req, res, next) {
 	const { page, limit, search, category, ingredient } = req.query;
@@ -26,54 +26,17 @@ async function getAll(req, res, next) {
 			filter = { ...filter, "ingredients.title": ingredient };
 		}
 
-		const result = await Coctail.aggregate([
-			{
-				$match: {
-					...filter,
-				},
-			},
-
-			{
-				$facet: {
-					recipes: [
-						{ $skip: (pageNumber - 1) * pageSize },
-						{ $limit: pageSize },
-					],
-					totalCount: [{ $group: { _id: null, count: { $sum: 1 } } }],
-				},
-			},
-
-			{ $unwind: "$totalCount" },
-
-			{
-				$project: {
-					_id: 0,
-					recipes: {
-						$map: {
-							input: "$recipes",
-							in: {
-								_id: "$$this._id",
-								drink: "$$this.drink",
-								description: "$$this.description",
-								category: "$$this.category",
-								glass: "$$this.glass",
-								instructions: "$$this.instructions",
-								drinkThumb: "$$this.drinkThumb",
-								ingredients: "$$this.ingredients",
-							},
-						},
-					},
-					totalRecipes: "$totalCount.count",
-					totalPages: { $ceil: { $divide: ["$totalCount.count", pageSize] } },
-				},
-			},
-		]);
+		const result = await getRecipesByFilter(filter, pageNumber, pageSize);
 
 		if (result.length === 0) {
 			result.push({});
 		}
 
 		const { recipes, totalRecipes, totalPages } = result[0];
+
+		if (pageNumber > totalPages) {
+			throw HttpError(400);
+		}
 
 		res.json({
 			recipes: recipes ?? [],
