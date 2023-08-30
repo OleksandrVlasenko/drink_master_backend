@@ -10,7 +10,7 @@ const getAll = async (req, res) => {
 	const totalRecipes = await Coctail.countDocuments({ owner });
 	const totalPages = Math.ceil(totalRecipes / limit);
 
-	const results = await Coctail.find({ owner })
+	const recipes = await Coctail.find({ owner })
 		.select(responseItems)
 		.skip(skip)
 		.limit(limit);
@@ -19,7 +19,7 @@ const getAll = async (req, res) => {
 		totalRecipes,
 		totalPages,
 		currentPage: page,
-		results,
+		recipes,
 	});
 };
 
