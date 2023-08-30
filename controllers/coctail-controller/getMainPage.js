@@ -1,4 +1,5 @@
 import { Coctail } from "../../models/coctail.js";
+import { getArrayWithThreeItems } from "../../utils/index.js";
 
 async function getMainPage(req, res) {
 	const result = await Coctail.aggregate([
@@ -9,29 +10,12 @@ async function getMainPage(req, res) {
 			},
 		},
 		{
-			$addFields: {
-				recipes: {
-					$map: {
-						input: {
-							$range: [0, 3],
-						},
-						in: {
-							$arrayElemAt: [
-								"$items",
-								{ $floor: { $multiply: [{ $rand: {} }, { $size: "$items" }] } },
-							],
-						},
-					},
-				},
-			},
-		},
-		{
 			$project: {
 				_id: 0,
 				category: "$_id",
 				recipes: {
 					$map: {
-						input: "$recipes",
+						input: "$items",
 						in: {
 							_id: "$$this._id",
 							drink: "$$this.drink",
@@ -48,10 +32,16 @@ async function getMainPage(req, res) {
 		},
 	]);
 
-	const recipes = result.reduce((acc, { recipes, category }) => {
-		acc[category] = recipes;
-		return acc;
-	}, {});
+	
+
+	const recipes = result
+		.map(({ category, recipes }) => {
+			return { category, recipes: getArrayWithThreeItems(recipes) };
+		})
+		.reduce((acc, { recipes, category }) => {
+			acc[category] = recipes;
+			return acc;
+		}, {});
 
 	res.json(recipes);
 }
