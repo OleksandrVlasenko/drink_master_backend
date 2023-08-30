@@ -291,6 +291,10 @@
 							}
 						}
 					},
+					"400": {
+						"description": "Bad Request",
+						"content": {}
+					},
 					"401": {
 						"description": "Unauthorized",
 						"content": {}
@@ -355,6 +359,7 @@
 			"get": {
 				"tags": ["Recipes"],
 				"summary": "return object {category: [array of 3 random recipes]}",
+				"security": [{ "Bearer": [] }],
 				"parameters": [],
 				"responses": {
 					"200": {
@@ -487,7 +492,6 @@
 				}
 			}
 		},
-
 		"/own/{id}": {
 			"delete": {
 				"tags": ["My Recipes"],
@@ -531,7 +535,6 @@
 				}
 			}
 		},
-
 		"/popular-recipes": {
 			"get": {
 				"tags": ["Popular recipes"],
@@ -594,6 +597,10 @@
 								}
 							}
 						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {}
 					},
 					"401": {
 						"description": "Unauthorized",
