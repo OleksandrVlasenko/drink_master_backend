@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/", authenticate, myRecipesController.add);
 
-router.post("/:id", authenticate, myRecipesController.removeById);
+router.delete("/:id", authenticate, myRecipesController.removeById);
 
 router.get("/", authenticate, myRecipesController.getAll);
 

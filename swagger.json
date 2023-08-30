@@ -382,6 +382,141 @@
 				}
 			}
 		},
+		"/own": {
+			"get": {
+				"tags": ["My Recipes"],
+				"summary": "return a list of user own recipes",
+				"security": [{ "Bearer": [] }],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Recipes"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {}
+					},
+
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			},
+			"post": {
+				"tags": ["My Recipes"],
+				"summary": "add user own recipes",
+				"security": [{ "Bearer": [] }],
+				"parameters": [],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/My-recipe"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Recipes"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "Recipe added successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Recipes"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {}
+					},
+
+					"409": {
+						"description": "Name of drink already exists",
+						"content": {}
+					},
+
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			}
+		},
+
+		"/own/{id}": {
+			"delete": {
+				"tags": ["My Recipes"],
+				"summary": "removing user own recipe",
+				"security": [{ "Bearer": [] }],
+
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string",
+						"description": "ID of the recipe to be removed"
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Recipes"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {}
+					},
+
+					"500": {
+						"description": "Server error",
+						"content": {}
+					}
+				}
+			}
+		},
+
 		"/popular-recipes": {
 			"get": {
 				"tags": ["Popular recipes"],
@@ -1289,6 +1424,92 @@
 									"ingredientThumb": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169616/cocktails-v1/ingredient/Tequila.png",
 									"thumb-medium": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169616/cocktails-v1/ingredient/Tequila-Medium.png",
 									"thumb-small": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169616/cocktails-v1/ingredient/Tequila-Small.png"
+								}
+							]
+						}
+					]
+				}
+			},
+			"My-recipe": {
+				"type": "object",
+				"properties": {
+					"drink": {
+						"type": "string",
+						"description": "Recipe's name",
+						"example": "Dragonfly"
+					},
+					"category": {
+						"type": "string",
+						"description": "Category",
+						"example": "Coffee / Tea"
+					},
+					"glass": {
+						"type": "string",
+						"description": "Type of glass",
+						"example": "Highball glass"
+					},
+
+					"ingredients": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": ["title", "measure"],
+							"properties": {
+								"_id": {
+									"type": "string",
+									"description": "Ingredient's id",
+									"example": "64e9fa8d3c1392483f04d966"
+								},
+								"title": {
+									"type": "string",
+									"description": "Ingredient's name",
+									"example": "Highball glass"
+								},
+								"ingredientThumb": {
+									"type": "string",
+									"description": "Image of ingredient",
+									"example": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169611/cocktails-v1/ingredient/Sweet%20Vermouth.png"
+								},
+								"thumb-medium": {
+									"type": "string",
+									"description": "Image of ingredient medium",
+									"example": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169611/cocktails-v1/ingredient/Sweet%20Vermouth-Medium.png"
+								},
+								"thumb-small": {
+									"type": "string",
+									"description": "Image of ingredient small",
+									"example": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169611/cocktails-v1/ingredient/Sweet%20Vermouth-Small.png"
+								},
+								"measure": {
+									"type": "string",
+									"description": "Quantity",
+									"example": "1 1/2 oz"
+								}
+							}
+						}
+					},
+
+					"example": [
+						{
+							"drink": "test drink1ddd4",
+							"category": "Ordinary Drink",
+							"glass": "Highball glass",
+							"ingredients": [
+								{
+									"_id": "64edccbd62ed6c204e28f172",
+									"title": "Applejack",
+									"measure": "1 1/2 oz ",
+									"ingredientThumb": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack.png",
+									"thumb-medium": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack-Medium.png",
+									"thumb-small": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack-Small.png"
+								},
+								{
+									"_id": "64edccbd62ed6c204e28f173",
+									"title": "Grapefruit juice",
+									"measure": "1 oz ",
+									"ingredientThumb": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice.png",
+									"thumb-medium": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice-Medium.png",
+									"thumb-small": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice-Small.png"
 								}
 							]
 						}
