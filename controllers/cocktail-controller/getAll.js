@@ -1,7 +1,5 @@
 import { HttpError } from "../../helpers/index.js";
 import { getRecipesByFilter } from "../../utils/index.js";
-import json from "../../cocktails.json" assert { type: "json" };
-import { Cocktail } from "../../models/cocktail.js";
 
 async function getAll(req, res, next) {
 	const { page, limit, search, category, ingredient } = req.query;
@@ -10,15 +8,6 @@ async function getAll(req, res, next) {
 	const pageSize = limit ? Number(limit) : 10;
 
 	try {
-		// const aaa = await Cocktail.find();
-		// aaa.forEach(async elem => {
-		// 	elem.description = "";
-		// 	elem.instructions = [elem.instructions];
-		// 	elem.users = [];
-
-		// 	await Cocktail.create(elem);
-		// });
-
 		if (Number.isNaN(pageNumber) || Number.isNaN(pageSize)) {
 			throw HttpError(400);
 		}
