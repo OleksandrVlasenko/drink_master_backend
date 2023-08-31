@@ -1,8 +1,8 @@
-import { Coctail } from "../../models/coctail.js";
+import { Cocktail } from "../../models/cocktail.js";
 import { responseItems } from "../../constants/controllers-constants.js";
 
 async function getPopularRecipes(req, res) {
-	const result = await Coctail.find(
+	const result = await Cocktail.find(
 		{
 			userArrayLenght: { $gte: 1 },
 		},

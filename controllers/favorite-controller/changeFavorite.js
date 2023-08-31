@@ -1,22 +1,22 @@
 import { HttpError } from "../../helpers/index.js";
-import { Coctail } from "../../models/coctail.js";
+import { Cocktail } from "../../models/cocktail.js";
 
 async function changeFavorite(req, res) {
 	const { _id: userId } = req.user;
-	const { id: coctailId } = req.params;
+	const { id: cocktailId } = req.params;
 
-	const result = await Coctail.findById(coctailId, "users");
+	const result = await Cocktail.findById(cocktailId, "users");
 
 	if (!result) {
-		throw HttpError(400, `Coctail not found`);
+		throw HttpError(400, `Cocktail not found`);
 	}
 
 	const { users } = result;
 	const isFavorite = users.includes(userId);
 
 	if (isFavorite) {
-		await Coctail.findByIdAndUpdate(
-			coctailId,
+		await Cocktail.findByIdAndUpdate(
+			cocktailId,
 			{
 				$pull: { users: userId },
 				$inc: { userArrayLenght: -1 },
@@ -24,8 +24,8 @@ async function changeFavorite(req, res) {
 			{ new: true },
 		);
 	} else {
-		await Coctail.findByIdAndUpdate(
-			coctailId,
+		await Cocktail.findByIdAndUpdate(
+			cocktailId,
 			{
 				$push: { users: userId },
 				$inc: { userArrayLenght: 1 },

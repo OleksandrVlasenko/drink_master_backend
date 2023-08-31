@@ -1,9 +1,9 @@
-import { Coctail } from "../../models/coctail.js";
+import { Cocktail } from "../../models/cocktail.js";
 import { HttpError } from "../../helpers/HttpError.js";
 
 const removeById = async (req, res) => {
 	const { id } = req.params;
-	const recipes = await Coctail.findByIdAndRemove(id);
+	const recipes = await Cocktail.findByIdAndRemove(id);
 	if (!recipes) {
 		throw HttpError(400, "Not found");
 	}
