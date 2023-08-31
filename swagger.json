@@ -1794,34 +1794,33 @@
 								}
 							}
 						}
-					},
-
-					"example": [
-						{
-							"drink": "test drink1ddd4",
-							"category": "Ordinary Drink",
-							"glass": "Highball glass",
-							"ingredients": [
-								{
-									"_id": "64edccbd62ed6c204e28f172",
-									"title": "Applejack",
-									"measure": "1 1/2 oz ",
-									"ingredientThumb": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack.png",
-									"thumb-medium": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack-Medium.png",
-									"thumb-small": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack-Small.png"
-								},
-								{
-									"_id": "64edccbd62ed6c204e28f173",
-									"title": "Grapefruit juice",
-									"measure": "1 oz ",
-									"ingredientThumb": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice.png",
-									"thumb-medium": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice-Medium.png",
-									"thumb-small": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice-Small.png"
-								}
-							]
-						}
-					]
-				}
+					}
+				},
+				"example": [
+					{
+						"drink": "test drink1ddd4",
+						"category": "Ordinary Drink",
+						"glass": "Highball glass",
+						"ingredients": [
+							{
+								"_id": "64edccbd62ed6c204e28f172",
+								"title": "Applejack",
+								"measure": "1 1/2 oz ",
+								"ingredientThumb": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack.png",
+								"thumb-medium": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack-Medium.png",
+								"thumb-small": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169604/cocktails-v1/ingredient/Applejack-Small.png"
+							},
+							{
+								"_id": "64edccbd62ed6c204e28f173",
+								"title": "Grapefruit juice",
+								"measure": "1 oz ",
+								"ingredientThumb": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice.png",
+								"thumb-medium": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice-Medium.png",
+								"thumb-small": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169605/cocktails-v1/ingredient/Grapefruit%20juice-Small.png"
+							}
+						]
+					}
+				]
 			},
 			"Favorite": {
 				"type": "object",
