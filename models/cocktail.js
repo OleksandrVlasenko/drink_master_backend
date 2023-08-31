@@ -22,7 +22,7 @@ const cocktailSchema = Schema(
       },
     ],
     users: { type: Array, default: [] },
-    userArrayLenght: { type: Number, default: null },
+    userArrayLenght: { type: Number, default: 0 },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",
