@@ -2,17 +2,17 @@ import Joi from "joi";
 import { Schema, model } from "mongoose";
 import { handleMongooseError } from "../helpers/index.js";
 
-const coctailSchema = Schema(
+const cocktailSchema = Schema(
   {
     drink: {
       type: String,
-      required: [true, "Set name of Coctail"],
+      required: [true, "Set name of Cocktail"],
       unique: true,
     },
     description: { type: String, default: "" },
     category: { type: String, required: true },
     glass: { type: String, required: true },
-    instructions: { type: String, default: "" },
+    instructions: [{ type: String, default: "" }],
     drinkThumb: { type: String, required: false, default: "" },
     ingredients: [
       {
@@ -32,12 +32,12 @@ const coctailSchema = Schema(
   { versionKey: false }
 );
 
-coctailSchema.post("save", handleMongooseError);
+cocktailSchema.post("save", handleMongooseError);
 
-const Coctail = model("coctail", coctailSchema);
+const Cocktail = model("cocktail", cocktailSchema);
 
-const coctailSchemaJoi = Joi.object();
+const cocktailSchemaJoi = Joi.object();
 
-const schemas = { coctailSchemaJoi };
+const schemas = { cocktailSchemaJoi };
 
-export { Coctail, schemas };
+export { Cocktail, schemas };

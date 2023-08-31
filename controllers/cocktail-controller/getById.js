@@ -1,18 +1,18 @@
 import { HttpError } from "../../helpers/index.js";
-import { Coctail } from "../../models/coctail.js";
+import { Cocktail } from "../../models/cocktail.js";
 import { responseItems } from "../../constants/controllers-constants.js";
 
 async function getById(req, res) {
 	const { _id: userId } = req.user;
-	const { id: coctailId } = req.params;
+	const { id: cocktailId } = req.params;
 
-	const result = await Coctail.findById(
-		coctailId,
+	const result = await Cocktail.findById(
+		cocktailId,
 		`${responseItems} users`
 	);
 
 	if (!result) {
-		throw HttpError(400, `Coctail not found`);
+		throw HttpError(400, `Cocktail not found`);
 	}
 
 	const {

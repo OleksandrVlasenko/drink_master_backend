@@ -1,8 +1,8 @@
-import { Coctail } from "../../models/coctail.js";
+import { Cocktail } from "../../models/cocktail.js";
 import { getArrayWithThreeItems } from "../../utils/index.js";
 
 async function getMainPage(req, res) {
-	const result = await Coctail.aggregate([
+	const result = await Cocktail.aggregate([
 		{
 			$group: {
 				_id: "$category",

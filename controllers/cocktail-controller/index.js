@@ -4,10 +4,10 @@ import {getMainPage} from "./getMainPage.js"
 
 import { ctrlWrapper } from "../../helpers/index.js";
 
-const coctailController = {
+const cocktailController = {
 	getAll: ctrlWrapper(getAll),
 	getById: ctrlWrapper(getById),
 	getMainPage: ctrlWrapper(getMainPage),
 };
 
-export { coctailController };
+export { cocktailController };
