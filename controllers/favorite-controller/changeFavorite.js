@@ -5,12 +5,13 @@ async function changeFavorite(req, res) {
 	const { _id: userId } = req.user;
 	const { id: coctailId } = req.params;
 
-	const { users } = await Coctail.findById(coctailId, "users");
+	const result = await Coctail.findById(coctailId, "users");
 
-	if (!users) {
+	if (!result) {
 		throw HttpError(400, `Coctail not found`);
 	}
 
+	const { users } = result;
 	const isFavorite = users.includes(userId);
 
 	if (isFavorite) {
