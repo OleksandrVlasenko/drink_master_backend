@@ -11,7 +11,7 @@ const subscribeSchema = new Schema(
 			unique: true,
 			required: [true, "Email is required"],
 		}
-    }
+    },{ versionKey: false }
 )
 
 subscribeSchema.post("save", handleMongooseError);

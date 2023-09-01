@@ -20,7 +20,7 @@ async function subscribe(req, res) {
 
     await sendEmail(subscribeEmail);
 
-    res.json(newSubsriber);
+    res.json(`User ${newSubsriber.email} is successfully subscribed!`);
 }
 
 export { subscribe };
