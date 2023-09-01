@@ -12,19 +12,11 @@ async function getAll(req, res, next) {
 			throw HttpError(400);
 		}
 
-		let filter = {};
+		const filter = {};
 
-		if (search) {
-			filter = { ...filter, drink: { $regex: search, $options: "i" } };
-		}
-
-		if (category) {
-			filter = { ...filter, category };
-		}
-
-		if (ingredient) {
-			filter = { ...filter, "ingredients.title": ingredient };
-		}
+		search && (filter.drink = { $regex: search, $options: "i" });
+		category && (filter.category = category);
+		ingredient && (filter["ingredients.title"] = ingredient);
 
 		const result = await getRecipesByFilter(filter, pageNumber, pageSize);
 
