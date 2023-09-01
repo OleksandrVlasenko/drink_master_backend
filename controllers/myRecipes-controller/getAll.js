@@ -1,5 +1,6 @@
 import { Cocktail } from "../../models/cocktail.js";
 import { responseItems } from "../../constants/controllers-constants.js";
+import { HttpError } from "../../helpers/index.js";
 
 const getAll = async (req, res) => {
 	const { _id: owner } = req.user;
@@ -15,10 +16,14 @@ const getAll = async (req, res) => {
 		.skip(skip)
 		.limit(limit);
 
+	if (page > totalPages) {
+		throw HttpError(404, "Invalid page number");
+	}
+
 	res.json({
-		totalRecipes,
 		totalPages,
 		currentPage: page,
+		totalRecipes,
 		recipes,
 	});
 };
