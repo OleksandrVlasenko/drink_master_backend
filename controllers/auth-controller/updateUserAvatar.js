@@ -28,7 +28,7 @@ const updateUserData = async (req, res) => {
 
 	const updateUser = await User.findById(_id);
 
-	res.status(200).json({
+	res.status(201).json({
 		user: {
 			name: updateUser.name,
 			avatarURL: updateUser.avatarURL,
