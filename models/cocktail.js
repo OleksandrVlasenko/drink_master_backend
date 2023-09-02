@@ -13,6 +13,7 @@ const cocktailSchema = Schema(
 		category: { type: String, required: true },
 		glass: { type: String, required: true },
 		instructions: [{ type: String, default: "" }],
+		photoUrl: { type: String, required: false, default: "" },
 		drinkThumb: { type: String, required: false, default: "" },
 		ingredients: [
 			{
@@ -39,18 +40,16 @@ const userRecipeAddSchemaJoi = Joi.object({
 	description: Joi.string(),
 	category: Joi.string().required(),
 	glass: Joi.string().required(),
-	instructions: Joi.string(),
-	drinkThumb: Joi.string().allow("").optional(),
+	instructions: Joi.array(),
 	ingredients: Joi.array()
 		.items(
 			Joi.object({
-				_id: Joi.string(),
 				title: Joi.string(),
-				ingredientThumb: Joi.string(),
 				measure: Joi.string(),
 			})
 		)
 		.required(),
+	photoUrl: Joi.string().allow("").optional(),
 });
 
 const Cocktail = model("cocktail", cocktailSchema);

@@ -1745,7 +1745,12 @@
 						"description": "Type of glass",
 						"example": "Highball glass"
 					},
-
+					"photoUrl": {
+						"type": "string",
+						"format": "binary",
+						"description": "URL to the cocktail photo (optional)",
+						"example": "http://example.com/cocktail.jpg"
+					},
 					"ingredients": {
 						"type": "array",
 						"items": {
