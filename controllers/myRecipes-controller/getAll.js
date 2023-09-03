@@ -11,8 +11,7 @@ const getAll = async (req, res) => {
 	const totalRecipes = await Cocktail.countDocuments({ owner });
 	const totalPages = Math.ceil(totalRecipes / limit);
 
-	if (totalRecipes === 0) {
-		console.log(totalRecipes);
+	if (totalRecipes === 0) {		
 		return res.json({
 			totalPages: 0,
 			currentPage: page,
