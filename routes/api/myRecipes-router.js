@@ -5,7 +5,6 @@ import {
 	authenticate,
 	isEmptyBody,
 	upload,
-	jsonParse,
 } from "../../middlewares/index.js";
 import { userRecipeAddSchemaJoi } from "../../models/cocktail.js";
 
@@ -16,7 +15,6 @@ router.post(
 	authenticate,
 	upload.single("imageOfRecipe"),
 	isEmptyBody,
-	jsonParse,
 	validateBody(userRecipeAddSchemaJoi),
 	myRecipesController.add,
 );
