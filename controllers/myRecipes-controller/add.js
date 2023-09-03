@@ -36,9 +36,9 @@ const add = async (req, res, next) => {
 			drinkThumb = url;
 		}
 
-		await Cocktail.create({ ...req.body, drinkThumb, owner });
+		const { _id } = await Cocktail.create({ ...req.body, drinkThumb, owner });
 
-		res.status(201).json({ message: "Recipe added successfully" });
+		res.status(201).json({ _id });
 	} catch (error) {
 		next(error);
 	} finally {
