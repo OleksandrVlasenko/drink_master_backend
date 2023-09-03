@@ -19,7 +19,10 @@ export const signIn = async (req, res) => {
 	};
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-	await User.findByIdAndUpdate(user._id, { token });
+	const { exp } = jwt.decode(token, SECRET_KEY);
+	user.authorizationTokens.push({ token, exp });
+	await user.save();
+
 	res.json({
 		token,
 		user: {

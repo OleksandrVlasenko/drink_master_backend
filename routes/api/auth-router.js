@@ -6,7 +6,11 @@ import {
 	upload,
 	isEmptyBody,
 } from "../../middlewares/index.js";
-import { userSingUpSchema, userSingInSchema } from "../../models/user.js";
+import {
+	userSingUpSchema,
+	userSingInSchema,
+	userUpdateSchema,
+} from "../../models/user.js";
 
 const router = express.Router();
 
@@ -31,6 +35,7 @@ router.post("/signout", authenticate, authController.signOut);
 router.patch(
 	"/update",
 	authenticate,
+	validateBody(userUpdateSchema),
 	upload.single("avatar"),
 	authController.updateUserData
 );
