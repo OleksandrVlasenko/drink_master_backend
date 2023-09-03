@@ -26,12 +26,10 @@ const updateUserData = async (req, res) => {
 		name: updateName,
 	});
 
-	const updateUser = await User.findById(_id);
-
 	res.status(201).json({
 		user: {
-			name: updateUser.name,
-			avatarURL: updateUser.avatarURL,
+			name: updateName,
+			avatarURL: updateAvatarURL,
 		},
 	});
 };
