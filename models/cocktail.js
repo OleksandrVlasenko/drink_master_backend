@@ -1,26 +1,21 @@
 import Joi from "joi";
 import { Schema, model } from "mongoose";
 import { handleMongooseError } from "../helpers/index.js";
+import { ingredientSchema } from "../models/ingredient.js";
 
 const cocktailSchema = Schema(
 	{
 		drink: {
 			type: String,
 			required: [true, "Set name of Cocktail"],
-			unique: true,
+			unique: [true, "Recipe with this name is already exists"],
 		},
 		description: { type: String, default: "" },
 		category: { type: String, required: true },
 		glass: { type: String, required: true },
 		instructions: [{ type: String, default: "" }],
 		drinkThumb: { type: String, required: false, default: "" },
-		ingredients: [
-			{
-				title: { type: String, required: true },
-				ingredientThumb: { type: String, default: "" },
-				measure: { type: String, required: true },
-			},
-		],
+		ingredients: [ingredientSchema],
 		users: { type: Array, default: [] },
 		userArrayLenght: { type: Number, default: 0 },
 		owner: {
@@ -29,7 +24,7 @@ const cocktailSchema = Schema(
 			required: true,
 		},
 	},
-	{ versionKey: false }
+	{ versionKey: false },
 );
 
 cocktailSchema.post("save", handleMongooseError);
@@ -39,18 +34,16 @@ const userRecipeAddSchemaJoi = Joi.object({
 	description: Joi.string(),
 	category: Joi.string().required(),
 	glass: Joi.string().required(),
-	instructions: Joi.string(),
-	drinkThumb: Joi.string().allow("").optional(),
+	instructions: Joi.array().items(Joi.string()),
 	ingredients: Joi.array()
 		.items(
 			Joi.object({
-				_id: Joi.string(),
-				title: Joi.string(),
-				ingredientThumb: Joi.string(),
-				measure: Joi.string(),
-			})
+				title: Joi.string().required(),
+				measure: Joi.string().required(),
+			}),
 		)
 		.required(),
+	imageOfRecipe: Joi.string().allow("").optional(),
 });
 
 const Cocktail = model("cocktail", cocktailSchema);

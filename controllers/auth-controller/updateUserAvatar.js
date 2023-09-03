@@ -26,7 +26,7 @@ const updateUserData = async (req, res) => {
 		name: updateName,
 	});
 
-	res.status(200).json({
+	res.status(201).json({
 		user: {
 			name: updateName,
 			avatarURL: updateAvatarURL,
