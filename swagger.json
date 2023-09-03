@@ -440,15 +440,10 @@
 				"security": [{ "Bearer": [] }],
 				"parameters": [],
 				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
 					"content": {
-						"multipart/form-data": {
-							"required": [
-								"drink",
-								"category",
-								"glass",
-								"instructions",
-								"ingredients"
-							],
+						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/My-recipe"
 							}
@@ -461,14 +456,10 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/My-recipe-Response"
+									"$ref": "#/components/schemas/My-recipe"
 								}
 							}
 						}
-					},
-					"400": {
-						"description": "Bad Request",
-						"content": {}
 					},
 					"401": {
 						"description": "Unauthorized",
@@ -1739,48 +1730,52 @@
 			"My-recipe": {
 				"type": "object",
 				"properties": {
-					"imageOfRecipe": {
-						"type": "string",
-						"format": "binary"
-					},
 					"drink": {
 						"type": "string",
 						"description": "Recipe's name",
 						"example": "Dragonfly"
 					},
-					"description": {
-						"type": "string",
-						"description": "Dedcription of cocktail",
-						"example": "The Dragonfly Cocktail is an easy gin, ginger ale and lime cocktail that you'll make over and over again!"
-					},
 					"category": {
 						"type": "string",
 						"description": "Category",
-						"example": "Coffee/Tea"
+						"example": "Coffee / Tea"
 					},
 					"glass": {
 						"type": "string",
 						"description": "Type of glass",
 						"example": "Highball glass"
 					},
-					"instructions": {
-						"type": "array",
-						"items": {
-							"type": "string",
-							"description": "How to prepare recipe",
-							"example": "Start your Dragonfly cocktail by pouring the gin into an ice filled glass. Top up with ginger beer and stir gently."
-						},
-						"description": "array of string"
-					},
+
 					"ingredients": {
 						"type": "array",
 						"items": {
 							"type": "object",
+							"required": ["title", "measure"],
 							"properties": {
+								"_id": {
+									"type": "string",
+									"description": "Ingredient's id",
+									"example": "64e9fa8d3c1392483f04d966"
+								},
 								"title": {
 									"type": "string",
 									"description": "Ingredient's name",
-									"example": "Light rum"
+									"example": "Highball glass"
+								},
+								"ingredientThumb": {
+									"type": "string",
+									"description": "Image of ingredient",
+									"example": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169611/cocktails-v1/ingredient/Sweet%20Vermouth.png"
+								},
+								"thumb-medium": {
+									"type": "string",
+									"description": "Image of ingredient medium",
+									"example": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169611/cocktails-v1/ingredient/Sweet%20Vermouth-Medium.png"
+								},
+								"thumb-small": {
+									"type": "string",
+									"description": "Image of ingredient small",
+									"example": "http://res.cloudinary.com/dec1shvoo/image/upload/v1689169611/cocktails-v1/ingredient/Sweet%20Vermouth-Small.png"
 								},
 								"measure": {
 									"type": "string",
@@ -1788,31 +1783,23 @@
 									"example": "1 1/2 oz"
 								}
 							}
-						},
-						"description": "array of objects"
+						}
 					}
 				},
 				"example": {
-					"drink": "Dragonfly",
-					"description": "The Dragonfly Cocktail is an easy gin, ginger ale and lime cocktail that you'll make over and over again!",
-					"category": "Coffee / Tea",
+					"drink": "test drinky",
+					"category": "Ordinary Drink",
 					"glass": "Highball glass",
-					"instructions": [
-						"Start your Dragonfly cocktail by pouring the gin into an ice filled glass. Top up with ginger beer and stir gently.",
-						"Top up with ginger beer and stir gently.', 'Squeeze the lime wedge over the drink and drop it in.",
-						"Your Dragonfly cocktail recipe is done"
-					],
-					"ingredients": [{ "title": "Light rum", "measure": "1 1/2 oz" }]
-				}
-			},
-			"My-recipe-Response": {
-				"type": "object",
-				"properties": {
-					"message": {
-						"type": "string",
-						"description": "Response message",
-						"example": "Recipe added successfully"
-					}
+					"ingredients": [
+						{
+							"title": "Applejack",
+							"measure": "1 1/2 oz "
+						},
+						{
+							"title": "Applejack",
+							"measure": "1 1/2 oz "
+						}
+					]
 				}
 			},
 			"Favorite": {
