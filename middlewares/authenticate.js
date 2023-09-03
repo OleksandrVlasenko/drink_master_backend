@@ -31,9 +31,6 @@ const authenticate = async (req, res, next) => {
 						});
 					}
 				});
-
-				await user.save();
-				throw HttpError(401, "Token is staled");
 			}
 		}
 
