@@ -9,14 +9,11 @@ const authenticate = async (req, res, next) => {
 	const { authorization } = req.headers;
 
 	try {
-		if (!authorization) {
-			throw HttpError(401);
-		}
+		if (!authorization) throw HttpError(401);
 
 		const [bearer, token] = authorization.split(" ");
-		if (bearer !== "Bearer") {
-			throw HttpError(401);
-		}
+		if (bearer !== "Bearer") throw HttpError(401);
+
 		const { id } = jwt.decode(token, SECRET_KEY);
 		const user = await User.findById(id);
 
@@ -36,21 +33,17 @@ const authenticate = async (req, res, next) => {
 
 		jwt.verify(token, SECRET_KEY);
 
-		if (user.authorizationTokens.length < 1) {
-			throw HttpError(401);
-		}
+		if (user.authorizationTokens.length < 1) throw HttpError(401);
 
 		const actualToken = user.authorizationTokens.find(
 			(obj) => obj.token === token
 		);
 
-		if (!actualToken) {
-			throw HttpError(401);
-		}
+		if (!actualToken) throw HttpError(401);
 
-		if (!user || !actualToken.token || actualToken.token !== token) {
+		if (!user || !actualToken.token || actualToken.token !== token)
 			throw HttpError(401);
-		}
+
 		req.user = user;
 		next();
 	} catch (error) {
