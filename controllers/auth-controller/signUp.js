@@ -19,6 +19,7 @@ export const signUp = async (req, res) => {
 		...req.body,
 		avatarURL,
 		password: hashPassword,
+		authorizationTokens: [],
 	});
 
 	const payload = {
@@ -26,7 +27,10 @@ export const signUp = async (req, res) => {
 	};
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-	await User.findByIdAndUpdate(newUser._id, { token });
+	const { exp } = jwt.decode(token, SECRET_KEY);
+
+	newUser.authorizationTokens.push({ token, exp });
+	await newUser.save();
 
 	res.status(201).json({
 		token,

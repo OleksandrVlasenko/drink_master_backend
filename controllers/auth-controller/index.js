@@ -2,7 +2,7 @@ import { getCurrentUser } from "./getCurrentUser.js";
 import { signIn } from "./signIn.js";
 import { signOut } from "./signOut.js";
 import { signUp } from "./signUp.js";
-import { updateUserData } from "./updateUserAvatar.js";
+import { updateUserData } from "./updateUserData.js";
 
 import { ctrlWrapper } from "../../helpers/index.js";
 

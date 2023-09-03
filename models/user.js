@@ -8,7 +8,6 @@ const userSchema = new Schema(
 	{
 		name: {
 			type: String,
-			// required: [true, "Name is required"],
 		},
 		email: {
 			type: String,
@@ -21,9 +20,14 @@ const userSchema = new Schema(
 			minlength: 6,
 			required: [true, "Set password for user"],
 		},
-		token: {
-			type: String,
-			default: "",
+		authorizationTokens: {
+			type: [
+				{
+					token: { type: String },
+					exp: { type: String },
+				},
+			],
+			default: [],
 		},
 		avatarURL: {
 			type: String,
@@ -53,4 +57,9 @@ const userSingInSchema = Joi.object({
 	password: Joi.string().min(6).required(),
 });
 
-export { User, userSingUpSchema, userSingInSchema };
+const userUpdateSchema = Joi.object({
+	name: Joi.string(),
+	avatar: Joi.string(),
+});
+
+export { User, userSingUpSchema, userSingInSchema, userUpdateSchema };
