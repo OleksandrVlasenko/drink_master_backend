@@ -8,7 +8,7 @@ const ingredientSchema = new Schema(
 		ingredientThumb: { type: String, default: "" },
 		measure: { type: String, required: true },
 	},
-	{ versionKey: false, timestamps: true },
+	{ versionKey: false, timestamps: false, _id: false },
 );
 
 ingredientSchema.post("save", handleMongooseError);

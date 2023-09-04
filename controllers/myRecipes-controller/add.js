@@ -2,12 +2,14 @@ import { cloudinary } from "../../helpers/index.js";
 import { Cocktail } from "../../models/cocktail.js";
 import { Category } from "../../models/category.js";
 import { Glass } from "../../models/glass.js";
+import { Ingredient } from "../../models/ingredient.js";
 import { HttpError } from "../../helpers/HttpError.js";
 import fs from "fs/promises";
 
 const add = async (req, res, next) => {
 	const { _id: owner } = req.user;
-	const { drink, category, glass } = req.body;
+	const { drink, category, glass, ingredients } = req.body;
+
 	try {
 		const incomingDrink = await Cocktail.findOne({ drink });
 		if (incomingDrink) {
@@ -23,6 +25,30 @@ const add = async (req, res, next) => {
 		if (!incomingGlass) {
 			throw HttpError(400, "The glass must be from a list of glass");
 		}
+
+		const arrayOfIngredients = ingredients.reduce(
+			(acc,
+			elem) => {
+				acc.push(elem.title);
+				return acc;
+			},
+			[],
+		);
+
+		const ingredientsOfDB = await Ingredient.find({
+			title: { $in: arrayOfIngredients },
+		});
+
+		if (arrayOfIngredients.length !== ingredientsOfDB.length) {
+			throw HttpError(400, "The ingredien must be from a list of ingredients");
+		}
+
+		req.body.ingredients = ingredients.map(elem => {
+			elem.ingredientThumb = ingredientsOfDB.find(
+				({ title }) => title === elem.title,
+			).ingredientThumb;
+			return elem;
+		});
 
 		let drinkThumb = "";
 
