@@ -5,6 +5,8 @@ import { Glass } from "../../models/glass.js";
 import { Ingredient } from "../../models/ingredient.js";
 import { HttpError } from "../../helpers/HttpError.js";
 import fs from "fs/promises";
+import { showModal } from "../../utils/index.js";
+import { User } from "../../models/user.js";
 
 const add = async (req, res, next) => {
 	const { _id: owner } = req.user;
@@ -12,36 +14,27 @@ const add = async (req, res, next) => {
 
 	try {
 		const incomingDrink = await Cocktail.findOne({ drink });
-		if (incomingDrink) {
-			throw HttpError(409, `${drink} already exists`);
-		}
+		if (incomingDrink) throw HttpError(409, `${drink} already exists`);
 
 		const incomingCategoty = await Category.findOne({ name: category });
-		if (!incomingCategoty) {
+		if (!incomingCategoty)
 			throw HttpError(400, "The category must be from a list of category");
-		}
 
 		const incomingGlass = await Glass.findOne({ name: glass });
-		if (!incomingGlass) {
+		if (!incomingGlass)
 			throw HttpError(400, "The glass must be from a list of glass");
-		}
 
-		const arrayOfIngredients = ingredients.reduce(
-			(acc,
-			elem) => {
-				acc.push(elem.title);
-				return acc;
-			},
-			[],
-		);
+		const arrayOfIngredients = ingredients.reduce((acc, elem) => {
+			acc.push(elem.title);
+			return acc;
+		}, []);
 
 		const ingredientsOfDB = await Ingredient.find({
 			title: { $in: arrayOfIngredients },
 		});
 
-		if (arrayOfIngredients.length !== ingredientsOfDB.length) {
+		if (arrayOfIngredients.length !== ingredientsOfDB.length)
 			throw HttpError(400, "The ingredien must be from a list of ingredients");
-		}
 
 		req.body.ingredients = ingredients.map(elem => {
 			elem.ingredientThumb = ingredientsOfDB.find(
@@ -64,7 +57,23 @@ const add = async (req, res, next) => {
 
 		const { _id } = await Cocktail.create({ ...req.body, drinkThumb, owner });
 
-		res.status(201).json({ _id });
+		req.user = await User.findByIdAndUpdate(
+			owner,
+			{
+				$inc: { "showModal.myRecipes.counter": 1 },
+			},
+			{ new: true },
+		);
+
+		const { showModalFirstRecipe, showModalTenthRecipe } = await showModal(
+			req.user,
+			"myRecipes",
+		);
+
+		res.status(201).json({
+			_id,
+			showModalMyRecipes: { showModalFirstRecipe, showModalTenthRecipe },
+		});
 	} catch (error) {
 		next(error);
 	} finally {
