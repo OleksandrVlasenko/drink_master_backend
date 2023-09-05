@@ -14,24 +14,24 @@ const authenticate = async (req, res, next) => {
 		const [bearer, token] = authorization.split(" ");
 		if (bearer !== "Bearer") throw HttpError(401);
 
-		const { id } = jwt.decode(token, SECRET_KEY);
+		const { id } = jwt.verify(token, SECRET_KEY);
 		const user = await User.findById(id);
 
-		if (user) {
-			if (user.authorizationTokens && user.authorizationTokens.length > 0) {
-				const currentTime = Math.floor(Date.now() / 1000);
+		// if (user) {
+		// 	if (user.authorizationTokens && user.authorizationTokens.length > 0) {
+		// 		const currentTime = Math.floor(Date.now() / 1000);
 
-				user.authorizationTokens.forEach(async (obj) => {
-					if (obj.exp < currentTime) {
-						await User.findByIdAndUpdate(id, {
-							$pull: { authorizationTokens: { token } },
-						});
-					}
-				});
-			}
-		}
+		// 		user.authorizationTokens.forEach(async (obj) => {
+		// 			if (obj.exp < currentTime) {
+		// 				await User.findByIdAndUpdate(id, {
+		// 					$pull: { authorizationTokens: { token } },
+		// 				});
+		// 			}
+		// 		});
+		// 	}
+		// }
 
-		jwt.verify(token, SECRET_KEY);
+		// jwt.verify(token, SECRET_KEY);
 
 		if (user.authorizationTokens.length < 1) throw HttpError(401);
 
