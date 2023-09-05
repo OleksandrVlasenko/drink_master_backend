@@ -630,7 +630,6 @@
 						"description": "Enter ID of recipe"
 					}
 				],
-
 				"responses": {
 					"200": {
 						"description": "Successful operation",
@@ -1808,10 +1807,17 @@
 			"My-recipe-Response": {
 				"type": "object",
 				"properties": {
-					"message": {
+					"_id": {
 						"type": "string",
 						"description": "Response message",
-						"example": "Recipe added successfully"
+						"example": "64f7a94ff143e44bd78dc85e"
+					},
+					"showModalMyRecipes": {
+						"type": "object",
+						"properties": {
+							"showModalFirstRecipe": { "type": "boolean", "example": false },
+							"showModalTenthRecipe": { "type": "boolean", "example": false }
+						}
 					}
 				}
 			},
@@ -1822,10 +1828,21 @@
 						"type": "boolean",
 						"description": "Category's id",
 						"example": false
+					},
+					"showModalFavorite": {
+						"type": "object",
+						"properties": {
+							"showModalFirstRecipe": { "type": "boolean", "example": false },
+							"showModalTenthRecipe": { "type": "boolean", "example": false }
+						}
 					}
 				},
 				"example": {
-					"isFavorite": false
+					"isFavorite": false,
+					"showModalFavorite": {
+						"showModalFirstRecipe": false,
+						"showModalTenthRecipe": false
+					}
 				}
 			},
 			"CategoryList": {

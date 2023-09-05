@@ -1,5 +1,7 @@
 import { HttpError } from "../../helpers/index.js";
 import { Cocktail } from "../../models/cocktail.js";
+import { User } from "../../models/user.js";
+import { showModal } from "../../utils/index.js";
 
 async function changeFavorite(req, res) {
 	const { _id: userId } = req.user;
@@ -7,9 +9,7 @@ async function changeFavorite(req, res) {
 
 	const result = await Cocktail.findById(cocktailId, "users");
 
-	if (!result) {
-		throw HttpError(400, `Cocktail not found`);
-	}
+	if (!result) throw HttpError(400, `Cocktail not found`);
 
 	const { users } = result;
 	const isFavorite = users.includes(userId);
@@ -23,6 +23,13 @@ async function changeFavorite(req, res) {
 			},
 			{ new: true },
 		);
+		req.user = await User.findByIdAndUpdate(
+			userId,
+			{
+				$inc: { "showModal.favorite.counter": -1 },
+			},
+			{ new: true },
+		);
 	} else {
 		await Cocktail.findByIdAndUpdate(
 			cocktailId,
@@ -32,9 +39,24 @@ async function changeFavorite(req, res) {
 			},
 			{ new: true },
 		);
+		req.user = await User.findByIdAndUpdate(
+			userId,
+			{
+				$inc: { "showModal.favorite.counter": 1 },
+			},
+			{ new: true },
+		);
 	}
 
-	res.status(201).json({ isFavorite: !isFavorite });
+	const { showModalFirstRecipe, showModalTenthRecipe } = await showModal(
+		req.user,
+		"favorite",
+	);
+
+	res.status(201).json({
+		isFavorite: !isFavorite,
+		showModalFavorite: { showModalFirstRecipe, showModalTenthRecipe },
+	});
 }
 
 export { changeFavorite };

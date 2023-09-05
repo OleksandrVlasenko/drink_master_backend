@@ -29,13 +29,26 @@ const userSchema = new Schema(
 			],
 			default: [],
 		},
+		showModal: {
+			timeUsing: { isShown: { type: Boolean, default: false } },
+			favorite: {
+				counter: { type: Number, default: 0 },
+				isShownFirstRecipe: { type: Boolean, default: false },
+				isShownTenthRecipe: { type: Boolean, default: false },
+			},
+			myRecipes: {
+				counter: { type: Number, default: 0 },
+				isShownFirstRecipe: { type: Boolean, default: false },
+				isShownTenthRecipe: { type: Boolean, default: false },
+			},
+		},
 		avatarURL: {
 			type: String,
 			required: true,
 			default: "",
 		},
 	},
-	{ versionKey: false, timestamps: true }
+	{ versionKey: false, timestamps: true },
 );
 
 userSchema.pre("findOneAndUpdate", handleUpdateValidate);
