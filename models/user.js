@@ -22,12 +22,16 @@ const userSchema = new Schema(
 		},
 		authorizationTokens: {
 			type: [
-				{
-					token: { type: String },
-					exp: { type: String },
-				},
+				new Schema(
+					{
+						token: {
+							type: String,
+							required: true,
+						},
+					},
+					{ _id: false },
+				),
 			],
-			default: [],
 		},
 		showModal: {
 			timeUsing: { isShown: { type: Boolean, default: false } },

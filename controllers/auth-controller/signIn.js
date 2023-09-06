@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 const { SECRET_KEY } = process.env;
 
-export const signIn = async (req, res) => {
+const signIn = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
 
@@ -19,9 +19,9 @@ export const signIn = async (req, res) => {
 	};
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-	const { exp } = jwt.decode(token, SECRET_KEY);
-	user.authorizationTokens.push({ token, exp });
-	await user.save();
+	await User.findByIdAndUpdate(user._id, {
+		$push: { authorizationTokens: { token } },
+	});
 
 	const timeDifference = Date.now() - user.createdAt;
 	const { isShown } = user.showModal.timeUsing;
@@ -44,4 +44,4 @@ export const signIn = async (req, res) => {
 	});
 };
 
-export default { signIn };
+export { signIn };
