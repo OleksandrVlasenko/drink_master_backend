@@ -513,10 +513,14 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Recipes"
+									"$ref": "#/components/schemas/My-recipe-delete"
 								}
 							}
 						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {}
 					},
 					"401": {
 						"description": "Unauthorized",
@@ -1822,6 +1826,15 @@
 							"showModalFirstRecipe": { "type": "boolean", "example": false },
 							"showModalTenthRecipe": { "type": "boolean", "example": false }
 						}
+					}
+				}
+			},
+			"My-recipe-delete": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"example": "Delete success"
 					}
 				}
 			},
