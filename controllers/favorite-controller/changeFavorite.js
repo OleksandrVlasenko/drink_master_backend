@@ -1,6 +1,5 @@
 import { HttpError } from "../../helpers/index.js";
-import { Cocktail } from "../../models/cocktail.js";
-import { User } from "../../models/user.js";
+import { Cocktail, User } from "../../models/index.js";
 import { showModal } from "../../utils/index.js";
 
 async function changeFavorite(req, res) {

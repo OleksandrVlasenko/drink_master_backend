@@ -1,5 +1,5 @@
 import { cloudinary } from "../../helpers/index.js";
-import { User } from "../../models/user.js";
+import { User } from "../../models/index.js";
 import fs from "fs/promises";
 
 const updateUserData = async (req, res) => {

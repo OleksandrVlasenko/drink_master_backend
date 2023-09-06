@@ -1,7 +1,6 @@
-import { User } from "../../models/user.js";
+import { User } from "../../models/index.js";
 import { HttpError } from "../../helpers/index.js";
 import bcrypt from "bcrypt";
-import "dotenv/config";
 import jwt from "jsonwebtoken";
 
 const { SECRET_KEY } = process.env;
@@ -9,6 +8,8 @@ const { SECRET_KEY } = process.env;
 export const signIn = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
+	console.log("signIn  user:", user);
+
 	if (!user) throw HttpError(400, "Email or password invalid");
 
 	const passwordCompare = await bcrypt.compare(password, user.password);
@@ -23,6 +24,16 @@ export const signIn = async (req, res) => {
 	user.authorizationTokens.push({ token, exp });
 	await user.save();
 
+	const timeDifference = Date.now() - user.createdAt;
+	const { isShown } = user.showModal.timeUsing;
+	let showModalTimeUsing = false;
+	if (timeDifference > 864000000 && !isShown) {
+		showModalTimeUsing = true;
+		await User.findByIdAndUpdate(user._id, {
+			"showModal.timeUsing.isShown": true,
+		});
+	}
+
 	res.json({
 		token,
 		user: {
@@ -30,6 +41,7 @@ export const signIn = async (req, res) => {
 			email: user.email,
 			avatarURL: user.avatarURL,
 		},
+		showModalTimeUsing,
 	});
 };
 

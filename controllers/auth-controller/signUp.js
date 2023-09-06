@@ -1,5 +1,4 @@
-import { User } from "../../models/user.js";
-import "dotenv/config";
+import { User } from "../../models/index.js";
 import bcrypt from "bcrypt";
 import { HttpError } from "../../helpers/index.js";
 import jwt from "jsonwebtoken";

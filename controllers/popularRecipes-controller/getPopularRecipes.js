@@ -1,4 +1,4 @@
-import { Cocktail } from "../../models/cocktail.js";
+import { Cocktail } from "../../models/index.js";
 import { responseItems } from "../../constants/controllers-constants.js";
 
 async function getPopularRecipes(req, res) {

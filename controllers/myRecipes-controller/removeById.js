@@ -1,6 +1,5 @@
-import { Cocktail } from "../../models/cocktail.js";
+import { Cocktail, User} from "../../models/index.js";
 import { HttpError } from "../../helpers/HttpError.js";
-import { User } from "../../models/user.js";
 
 const removeById = async (req, res) => {
 	const { _id: userId } = req.user;

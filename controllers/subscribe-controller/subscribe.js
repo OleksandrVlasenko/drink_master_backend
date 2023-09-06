@@ -1,4 +1,4 @@
-import { Subscriber } from "../../models/subscribe.js"
+import { Subscriber } from "../../models/index.js";
 import { HttpError } from "../../helpers/HttpError.js"
 import { sendEmail } from "../../helpers/index.js";
 import "dotenv/config";

@@ -1,5 +1,5 @@
 import { HttpError } from "../../helpers/index.js";
-import { Cocktail } from "../../models/cocktail.js";
+import { Cocktail } from "../../models/index.js";
 import { responseItems } from "../../constants/controllers-constants.js";
 
 async function getById(req, res) {
