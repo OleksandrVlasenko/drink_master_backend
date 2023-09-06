@@ -8,7 +8,6 @@ const { SECRET_KEY } = process.env;
 export const signIn = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
-	console.log("signIn  user:", user);
 
 	if (!user) throw HttpError(400, "Email or password invalid");
 
