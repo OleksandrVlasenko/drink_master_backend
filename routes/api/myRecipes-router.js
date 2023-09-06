@@ -6,7 +6,7 @@ import {
 	isEmptyBody,
 	upload,
 } from "../../middlewares/index.js";
-import { userRecipeAddSchemaJoi } from "../../models/cocktail.js";
+import { userRecipeAddSchemaJoi } from "../../models/index.js";
 
 const router = express.Router();
 

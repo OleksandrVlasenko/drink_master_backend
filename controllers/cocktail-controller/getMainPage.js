@@ -1,4 +1,4 @@
-import { Cocktail } from "../../models/cocktail.js";
+import { Cocktail } from "../../models/index.js";
 import { getArrayWithThreeItems } from "../../utils/index.js";
 
 async function getMainPage(req, res) {

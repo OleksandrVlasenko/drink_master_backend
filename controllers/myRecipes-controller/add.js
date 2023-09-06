@@ -1,12 +1,14 @@
 import { cloudinary } from "../../helpers/index.js";
-import { Cocktail } from "../../models/cocktail.js";
-import { Category } from "../../models/category.js";
-import { Glass } from "../../models/glass.js";
-import { Ingredient } from "../../models/ingredient.js";
+import {
+	Cocktail,
+	Category,
+	Glass,
+	Ingredient,
+	User,
+} from "../../models/index.js";
 import { HttpError } from "../../helpers/HttpError.js";
 import fs from "fs/promises";
 import { showModal } from "../../utils/index.js";
-import { User } from "../../models/user.js";
 
 const add = async (req, res, next) => {
 	const { _id: owner } = req.user;

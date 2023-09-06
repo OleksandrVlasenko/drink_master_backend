@@ -1,4 +1,4 @@
-import { Cocktail } from "../models/cocktail.js";
+import { Cocktail } from "../models/index.js";
 
 async function getRecipesByFilter(filterQuery, pageNumber, pageSize) {
 	return await Cocktail.aggregate([

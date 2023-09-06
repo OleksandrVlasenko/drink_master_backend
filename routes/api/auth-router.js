@@ -10,7 +10,7 @@ import {
 	userSingUpSchema,
 	userSingInSchema,
 	userUpdateSchema,
-} from "../../models/user.js";
+} from "../../models/index.js";
 
 const router = express.Router();
 

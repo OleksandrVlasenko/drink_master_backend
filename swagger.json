@@ -906,6 +906,10 @@
 							"email": "user@example.com",
 							"avatarURL": "https://example.com/avatar1.jpg"
 						}
+					},
+					"showModalTimeUsing": {
+						"type": "boolean",
+						"example": "false"
 					}
 				}
 			},
