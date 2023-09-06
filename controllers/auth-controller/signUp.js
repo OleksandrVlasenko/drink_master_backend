@@ -26,10 +26,9 @@ export const signUp = async (req, res) => {
 	};
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-	const { exp } = jwt.decode(token, SECRET_KEY);
-
-	newUser.authorizationTokens.push({ token, exp });
-	await newUser.save();
+	await User.findByIdAndUpdate(newUser._id, {
+		$push: { authorizationTokens: { token } },
+	});
 
 	res.status(201).json({
 		token,
