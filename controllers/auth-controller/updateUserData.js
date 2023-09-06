@@ -1,6 +1,7 @@
 import { cloudinary } from "../../helpers/index.js";
 import { User } from "../../models/index.js";
 import fs from "fs/promises";
+import { removeFileFromCloudinary } from "../../utils/index.js";
 
 const updateUserData = async (req, res) => {
 	const { _id, name: oldUserName, avatarURL: oldAvatarURL } = req.user;
@@ -11,6 +12,7 @@ const updateUserData = async (req, res) => {
 
 	if (req.file) {
 		const { path: pathToAvatar } = req.file;
+		await removeFileFromCloudinary(oldAvatarURL)
 		const { url: updateAvatar } = await cloudinary.uploader.upload(
 			pathToAvatar,
 			{

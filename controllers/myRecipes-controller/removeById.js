@@ -1,24 +1,38 @@
-import { Cocktail, User} from "../../models/index.js";
-import { HttpError } from "../../helpers/HttpError.js";
+import { Cocktail, User } from "../../models/index.js";
+import { HttpError } from "../../helpers/index.js";
+import { removeFileFromCloudinary } from "../../utils/index.js";
 
-const removeById = async (req, res) => {
+const removeById = async (req, res, next) => {
 	const { _id: userId } = req.user;
 	const { id } = req.params;
-	const recipes = await Cocktail.findByIdAndRemove(id);
-	console.log("removeById  recipes:", recipes)
-	if (!recipes) {
-		throw HttpError(400, "Not found");
+
+	try {
+		const recipes = await Cocktail.findOneAndDelete({
+			$and: [{ _id: id }, { owner: userId }],
+		});
+
+		if (!recipes) {
+			throw HttpError(
+				400,
+				"You do not have permission to delete this recipe or recipe not found",
+			);
+		}
+
+		const { drinkThumb } = recipes;
+		await removeFileFromCloudinary(drinkThumb);
+
+		await User.findByIdAndUpdate(
+			userId,
+			{
+				$inc: { "showModal.myRecipes.counter": -1 },
+			},
+			{ new: true },
+		);
+
+		res.status(201).json({ message: "Delete success" });
+	} catch (error) {
+		next(error);
 	}
-
-	await User.findByIdAndUpdate(
-		userId,
-		{
-			$inc: { "showModal.myRecipes.counter": -1 },
-		},
-		{ new: true },
-	);
-
-	res.status(201).json({ message: "Delete success" });
 };
 
 export { removeById };
