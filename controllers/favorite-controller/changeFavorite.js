@@ -47,10 +47,10 @@ async function changeFavorite(req, res) {
 		);
 	}
 
-	const { showModalFirstRecipe, showModalTenthRecipe } = await showModal(
-		req.user,
-		"favorite",
-	);
+	// const { showModalFirstRecipe, showModalTenthRecipe } = await showModal(
+	// 	req.user,
+	// 	"favorite",
+	// );
 
 	res.status(201).json({
 		isFavorite: !isFavorite,
