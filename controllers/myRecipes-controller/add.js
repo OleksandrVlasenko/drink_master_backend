@@ -67,10 +67,10 @@ const add = async (req, res, next) => {
 			{ new: true },
 		);
 
-		// const { showModalFirstRecipe, showModalTenthRecipe } = await showModal(
-		// 	req.user,
-		// 	"myRecipes",
-		// );
+		const { showModalFirstRecipe, showModalTenthRecipe } = await showModal(
+			req.user,
+			"myRecipes",
+		);
 
 		res.status(201).json({
 			_id,
